@@ -1,0 +1,8 @@
+*.s#*
+*.b#*
+*.zip
+*.rar
+Electronics\Rx\MFG
+Electronics\Tx\MFG
+/Releases
+/Inofficial
