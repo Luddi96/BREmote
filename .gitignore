@@ -2,7 +2,7 @@
 *.b#*
 *.zip
 *.rar
-Electronics\Rx\MFG
-Electronics\Tx\MFG
+/Electronics/Rx/MFG
+/Electronics/Tx/MFG
 /Releases
 /Inofficial
