@@ -1,4 +1,4 @@
-# BREmote - Open Source eFoil and Esk8 remote
+# BREmote - Open Source eFoil and Esk8 remote 
 ![Banner](https://github.com/Luddi96/BREmote/blob/main/img/banner.png)
 
 ## Features:
@@ -32,11 +32,13 @@
 * [OR Magnetic Connector](https://de.aliexpress.com/item/4001283688823.html)
 * [Battery Sanyo UR14500AC 740mAh](https://www.nkon.nl/de/sanyo-ur14500ac-740mah-1-52a-reclaimed.html)
 * [Vibration Motor 24x7mm, 3.7 to 5V](https://de.aliexpress.com/item/1005004063804397.html)
-
+* [PCBs, order at JLCPCB, Gerbers see releases](https://github.com/Luddi96/BREmote/releases)
+	* [Instruction how to order at JLC](https://youtu.be/y3GviDr0o1s)
 ### Mechanics:
 * [2x Magnet N52 D3x6mm](https://www.ebay.de/itm/162903572491?var=461969545239)
 * [2x Self-Threading Screw DIN7982 2.2x6.5mm](https://www.ebay.de/itm/272909463518?epid=17007662352)
 * [PU Foam, ~Factor 15, e.g. Talamex 45729200](https://www.tradeinn.com/waveinn/en/talamex-pu-foam/138533717/p)
+* [3D Printed Parts, see releases](https://github.com/Luddi96/BREmote/releases)
 
 ## Recommended Connector Pinning:
 ![Pinning1](https://github.com/Luddi96/BREmote/blob/main/img/pinning1.png) ![Pinning2](https://github.com/Luddi96/BREmote/blob/main/img/pinning2.png)
@@ -76,6 +78,7 @@
 ---
 # Changelog:
 
+### 2023-03-07: [Release V1.1]
 ### 2023-03-04: [Electronics - Tx]
 - Made Board 1mm smaller (each 0.5mm from top/bottom)
 - Therefore shifted SPI vias and some other traces, changed style of motor pinheaders
