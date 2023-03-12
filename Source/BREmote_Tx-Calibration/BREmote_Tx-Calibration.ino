@@ -1,3 +1,7 @@
+/* When flashing, select Processor: Aruino Nano (OLD BOOTLOADER)*/
+/* When flashing, select Processor: Aruino Nano (OLD BOOTLOADER)*/
+/* When flashing, select Processor: Aruino Nano (OLD BOOTLOADER)*/
+
 /*
     BREmote V1.1
     Copyright (C) 2022 Ludwig Brechter (contact@lbre.de)

@@ -104,9 +104,17 @@ void displayBattery(int selection)
   //VESC
   if(selection == 2)
   {
-    uint8_t bat = constrain(vesc_battery,0,99);
-    CHAR1 = charset[bat/10];
-    CHAR2 = charset[bat%10];
+    if(vesc_battery != 101)
+    {
+      uint8_t bat = constrain(vesc_battery,0,99);
+      CHAR1 = charset[bat/10];
+      CHAR2 = charset[bat%10];
+    }
+    else
+    {
+      CHAR1 = charset[DASH];
+      CHAR2 = charset[DASH];
+    }
   }
 }
 

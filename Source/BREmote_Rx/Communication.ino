@@ -60,7 +60,7 @@ void radioInterrupt()
         if(!failsafe)
         {
           uint16_t servoTime = (uint16_t)rx_arr[1];
-          OCR1A = 2500 + (servoTime<<2);
+          OCR1A = OCR1A_MID + (servoTime<<OCR1A_MULTIPLIER);
         }
         radio.writeAckPayload(1, &payload_arr, sizeof(payload_arr));
       }      

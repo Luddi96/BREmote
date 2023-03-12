@@ -1,3 +1,7 @@
+/* When flashing, select Processor: Aruino Nano (OLD BOOTLOADER)*/
+/* When flashing, select Processor: Aruino Nano (OLD BOOTLOADER)*/
+/* When flashing, select Processor: Aruino Nano (OLD BOOTLOADER)*/
+
 /*
     BREmote V1.1
     Copyright (C) 2022 Ludwig Brechter (contact@lbre.de)
@@ -33,18 +37,41 @@ uint8_t dummy = 0;
 
 void loop() 
 {
-  detachInterrupt(digitalPinToInterrupt(NRF_IRQ));
-  if( getValuesSelective(&vescSerial) )
+  if(millis() - get_vesc_timer > 1000)
   {
-    updatePayload();
+    // Get Voltage from VESC
+    detachInterrupt(digitalPinToInterrupt(NRF_IRQ));
+    if( getValuesSelective(&vescSerial) )
+    {
+      updatePayload();
+      last_uart_packet = millis();
+    }
+    attachInterrupt(digitalPinToInterrupt(NRF_IRQ), radioInterrupt, FALLING);
+    get_vesc_timer = millis();
   }
-  attachInterrupt(digitalPinToInterrupt(NRF_IRQ), radioInterrupt, FALLING);
-  delay(1000);
 
-  if(millis()-last_packet > 2000)
+  // Check if there is a error to be transmitted to remote
+  checkWetnessSensor();
+  if(errorToSend != -1)
+  {
+    payload_arr[1] = errorToSend;
+  }
+  else
+  {
+    payload_arr[1] = 0;
+  }
+
+  // Check for VESC connection break
+  if(millis() - last_uart_packet > 20000)
+  {
+    payload_arr[2] = 101;
+  }
+
+  // Check for Failsafe
+  if(millis() - last_packet > 2000)
   {
     failsafe = 1;
-    OCR1A = 2000;
+    OCR1A = OCR1A_FAILSAFE;
   }
   else
   {

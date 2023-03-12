@@ -63,3 +63,11 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
       #define VESC_BAT_EMPTY_AT 180 //10*V (e.g. 200 = 20V)
       #define VESC_BAT_FULL_AT 220  //10*V (e.g. 200 = 20V)
  
+/*
+* Error Codes (don't change)
+*/
+#define ERR_PACKET_CONTENT 3
+#define ERR_NO_ACK 4
+#define ERR_EEPROM 5
+#define ERR_NRF 6
+#define ERR_WET 7

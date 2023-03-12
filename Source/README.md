@@ -1,6 +1,9 @@
 ## How to compile / upload
 Download Arduino IDE.
-In Arduino IDE, go to Sketch -> Add Library -> Search for "RF24" and Install "RF24" from TMRh20 (you'll need to scroll down a bit)
+In Arduino IDE, go to Sketch -> Add Library -> Search for "RF24" and Install "RF24" from TMRh20 (you'll need to scroll down a bit).
+
+![Board](BoardSelection.png)
+
 Select as Board "Arduino Nano (ATMEGA328P) (OLD BOOTLOADER)"
 
 ## Software Changes

@@ -31,9 +31,12 @@ void sendValues()
       //Check if bit 3 is 0xFF
       if(rx_arr[3] == 0xFF)
       {
-        //Copy check value to tx array, get opcode
+        //Copy check value to tx array, get data
         tx_arr[0] = rx_arr[0];
-        opcode = rx_arr[1];
+        if(rx_arr[1] != 0)
+        {
+          remote_error = rx_arr[1];
+        }
         vesc_battery = rx_arr[2];
         if(comm_errors >= 250) comm_errors = 249;
         if(comm_errors > 0) comm_errors--;

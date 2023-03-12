@@ -97,7 +97,8 @@ int receiveFromVESC(uint8_t * buf, Stream* interface)
       }
     }
   }
-
+  
+/*
   Serial.println();
   Serial.println();
 
@@ -109,6 +110,7 @@ int receiveFromVESC(uint8_t * buf, Stream* interface)
 
   Serial.println();
   Serial.println();
+*/
 
   //Check if End is reached
   if(!rcv_err && raw_message[eom-1] == 3)

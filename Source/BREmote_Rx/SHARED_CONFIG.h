@@ -38,19 +38,19 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
       #define TOG_STB_DIFF 10 //Hysteresis for Standby Toggle
     
     //Timings
-      #define UNLOCK_TRIGGER_TIMEOUT 5000   //Time after unlock until trigger times out (ms)
-      #define LOCK_PWR_WAITTIME 2000        //Time toggle needs to be pressed to power off or lock system (ms)
+      #define UNLOCK_TRIGGER_TIMEOUT 5000         //Time after unlock until trigger times out (ms)
+      #define LOCK_PWR_WAITTIME 2000              //Time toggle needs to be pressed to power off or lock system (ms)
       
-      #define GEAR_CHANGE_WAITTIME 100      //Time toggle needs to be pressed to change gear (ms)
-      #define GEAR_DISPLAY_TIME 1000        //How long the new gear is shown (ms)
+      #define GEAR_CHANGE_WAITTIME 100            //Time toggle needs to be pressed to change gear (ms)
+      #define GEAR_DISPLAY_TIME 1000              //How long the new gear is shown (ms)
     
-      #define NO_ACTIVITY_TIMEOUT 60000     //Turn off power if no button is pressed and receiver has no connection (ms)
+      #define NO_ACTIVITY_TIMEOUT 60000           //Turn off power if no button is pressed and receiver has no connection (ms)
     
     //Internal Battery measurement
       #define INT_VBAT_CALIBRATION 0.004290224    //This converts ADC Bits to Voltage
       #define INT_VBAT_FULL_AT 410                //Voltage at which 1000% internal Battery is displayed (100*V) DEFAULT 410
       #define INT_VBAT_EMPTY_AT 340               //Voltage at which 0% internal Battery is displayed (Also the protection limit), MIN: 34V (100*V) DEFAULT 340
-      #define VESC_VBAT_WARN_AT 10               //Percent at wich VESC Battery triggers a warning (%)
+      #define VESC_VBAT_WARN_AT 10                //Percent at wich VESC Battery triggers a warning (%)
     
     //For Debug, Viration Motor can be disabled
       #define MOTOR_ENABLED
@@ -62,4 +62,17 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
     //VESC Battery Mapping
       #define VESC_BAT_EMPTY_AT 500 //10*V (e.g. 200 = 20V)
       #define VESC_BAT_FULL_AT 840  //10*V (e.g. 200 = 20V)
- 
+
+    //Wetness Detection
+      #define WETNESS_DET_ACTIVE    //If Wetness Detection should be active or not
+      #define WETNESS_SENS 500      //Wetness sensitivity. 0: Least sensitive, 1024: Most sensitive, good range: 100 to 500
+      #define WETNESS_HYST 50       //Wetness hysteresis. WETNESS_SENS - WETNESS_HYST must always be greater than 0, WETNESS_SENS + WETNESS_HYST must always be lower than 1024, good value: 50
+
+/*
+* Error Codes (don't change)
+*/
+#define ERR_PACKET_CONTENT 3
+#define ERR_NO_ACK 4
+#define ERR_EEPROM 5
+#define ERR_NRF 6
+#define ERR_WET 7

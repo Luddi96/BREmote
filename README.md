@@ -76,8 +76,18 @@
 | E6 | NRF Module | NRF (Wireless) Module can't be initialized, probably hardware fault |
 
 ---
+# FAQ:
+Q: When trying to program the remote with the Arduino IDE, I get an error "avrdude: stk500_getsync()"
+A: Make sure you selected "Arduino Nano ATmega328P **(Old Bootloader)**"
+
+---
 # Changelog:
 
+### 2023-03-12: [Release V1.2]
+### 2023-03-12: [Source]
+- Added more information, which Board and Processor to select for programming with Arduino IDE
+- Renamed Source Files to not contain Version anymore
+- Added Water Ingress Detection (Wetness Sensor) functionality
 ### 2023-03-07: [Release V1.1]
 ### 2023-03-04: [Electronics - Tx]
 - Made Board 1mm smaller (each 0.5mm from top/bottom)

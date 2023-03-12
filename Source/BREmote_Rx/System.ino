@@ -44,6 +44,24 @@ void enableSerial()
   vescSerial.begin(115200);
 }
 
+void checkWetnessSensor()
+{
+  #ifdef WETNESS_DET_ACTIVE
+    digitalWrite(EN_WET_MEAS, HIGH);
+    delay(1);
+    uint16_t wetness = analogRead(WET_MEAS);
+    digitalWrite(EN_WET_MEAS, LOW);
+    if(wetness < WETNESS_SENS - WETNESS_HYST)
+    {
+      errorToSend = ERR_WET;
+    }
+    if(wetness > WETNESS_SENS + WETNESS_HYST)
+    {
+      errorToSend = -1;
+    }
+  #endif
+}
+
 void setupTimer1()
 {
   //Set MEGA328 Timer 1 Mode: (Page 109 Datasheet)
@@ -66,6 +84,6 @@ void setupTimer1()
 
   //OCR1A is 0.5us (e.g. 2000 = 1000us)
   //By default, put out 1000us
-  OCR1A = 2000;
+  OCR1A = OCR1A_FAILSAFE;
   DDRB |= (1<<PB1);
 }
