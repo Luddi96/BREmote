@@ -44,20 +44,54 @@ void enableSerial()
   vescSerial.begin(115200);
 }
 
+void checkBMS()
+{
+  #ifdef BMS_DET_ACTIVE
+    uint16_t bms_value = analogRead(BMS_MEAS);
+    bms_value += analogRead(BMS_MEAS);
+    if(bms_value < 300)
+    {
+      if(errorToSend == -1)
+      {
+        errorToSend = ERR_BMS;
+      }
+    }
+    if(bms_value > 600)
+    {
+      if(errorToSend == ERR_BMS)
+      {
+        errorToSend = -1;
+      }
+    }
+  #endif
+}
+
 void checkWetnessSensor()
 {
   #ifdef WETNESS_DET_ACTIVE
     digitalWrite(EN_WET_MEAS, HIGH);
-    delay(1);
     uint16_t wetness = analogRead(WET_MEAS);
-    digitalWrite(EN_WET_MEAS, LOW);
+    wetness += analogRead(WET_MEAS);
+    wetness += analogRead(WET_MEAS);
+    wetness += analogRead(WET_MEAS);
+    wetness += analogRead(WET_MEAS);
+    wetness += analogRead(WET_MEAS);
+    wetness += analogRead(WET_MEAS);
+    wetness += analogRead(WET_MEAS);
+    wetness /= 8;
     if(wetness < WETNESS_SENS - WETNESS_HYST)
     {
-      errorToSend = ERR_WET;
+      if(errorToSend == -1)
+      {
+        errorToSend = ERR_WET;
+      }
     }
     if(wetness > WETNESS_SENS + WETNESS_HYST)
     {
-      errorToSend = -1;
+      if(errorToSend == ERR_WET)
+      {
+        errorToSend = -1;
+      }
     }
   #endif
 }

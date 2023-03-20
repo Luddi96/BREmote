@@ -62,7 +62,13 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
     //VESC Battery Mapping
       #define VESC_BAT_EMPTY_AT 180 //10*V (e.g. 200 = 20V)
       #define VESC_BAT_FULL_AT 220  //10*V (e.g. 200 = 20V)
- 
+
+    //Wetness Detection
+      #define WETNESS_DET_ACTIVE    //If Wetness Detection should be active or not (generates E7)
+      #define WETNESS_SENS 500      //Wetness sensitivity. 0: Least sensitive, 1024: Most sensitive, good range: 100 to 500
+      #define WETNESS_HYST 50       //Wetness hysteresis. WETNESS_SENS - WETNESS_HYST must always be greater than 0, WETNESS_SENS + WETNESS_HYST must always be lower than 1024, good value: 50
+
+      //#define BMS_DET_ACTIVE        //If External BMS Input should be read or not (generates E8)
 /*
 * Error Codes (don't change)
 */
@@ -71,3 +77,4 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
 #define ERR_EEPROM 5
 #define ERR_NRF 6
 #define ERR_WET 7
+#define ERR_BMS 8

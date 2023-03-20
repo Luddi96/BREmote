@@ -3,7 +3,7 @@
 /* When flashing, select Processor: Aruino Nano (OLD BOOTLOADER)*/
 
 /*
-    BREmote V1.1
+    BREmote Tx
     Copyright (C) 2022 Ludwig Brechter (contact@lbre.de)
     
     This program is free software: you can redistribute it and/or modify

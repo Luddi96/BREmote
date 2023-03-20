@@ -21,8 +21,8 @@
 
 ## Parts needed:
 ### Electronics:
-* [Tx PCB (files included in ZIP file)](https://jlcpcb.com/)
-* [Rx PCB (files included in ZIP file)](https://jlcpcb.com/)
+* [Tx & Rx PCBs, order at JLCPCB, Gerbers see releases](https://github.com/Luddi96/BREmote/releases)
+	* [Instruction how to order at JLC](https://youtu.be/y3GviDr0o1s)
 * [SMD NRF24L01 Module with onboard antenna](https://de.aliexpress.com/item/1005004905334589.html)
 * [SMD NRF24L01 Module with external antenna](https://de.aliexpress.com/item/1005004905334589.html)
 * [IPEX Antenna for NRF](https://de.aliexpress.com/item/1005003399563785.html)
@@ -32,8 +32,7 @@
 * [OR Magnetic Connector](https://de.aliexpress.com/item/4001283688823.html)
 * [Battery Sanyo UR14500AC 740mAh](https://www.nkon.nl/de/sanyo-ur14500ac-740mah-1-52a-reclaimed.html)
 * [Vibration Motor 24x7mm, 3.7 to 5V](https://de.aliexpress.com/item/1005004063804397.html)
-* [PCBs, order at JLCPCB, Gerbers see releases](https://github.com/Luddi96/BREmote/releases)
-	* [Instruction how to order at JLC](https://youtu.be/y3GviDr0o1s)
+
 ### Mechanics:
 * [2x Magnet N52 D3x6mm](https://www.ebay.de/itm/162903572491?var=461969545239)
 * [2x Self-Threading Screw DIN7982 2.2x6.5mm](https://www.ebay.de/itm/272909463518?epid=17007662352)
@@ -74,6 +73,8 @@
 | E4 | No Ack | No acknowledgement from Receiver, signal too weak or signal interference |
 | E5 | EEPROM Error | Unexpected/no calibration in EEPROM, try calibrating the remote again |
 | E6 | NRF Module | NRF (Wireless) Module can't be initialized, probably hardware fault |
+| E7 | Water Ingress | Water on the water detection electrodes attached to the receiver. This feature can be disabled in code if you dont use it (default: enabled). |
+| E8 | BMS Fault | BMS has disabled its output connected to the receiver. This feature can be disabled in code if you dont use it (default: disabled). |
 
 ---
 # FAQ:
@@ -83,6 +84,12 @@ A: Make sure you selected "Arduino Nano ATmega328P **(Old Bootloader)**"
 ---
 # Changelog:
 
+### 2023-03-12: [Release V1.3]
+### 2023-03-20: [Electronics - Rx]
+- Added components to make Water Ingress Detection (Wetness Sensor) more resitant to electromagnetic disturbance
+### 2023-03-20: [Source]
+- Added BMS monitoring function
+- Fixed Water Ingress Detection (Wetness Sensor) functionality
 ### 2023-03-12: [Release V1.2]
 ### 2023-03-12: [Source]
 - Added more information, which Board and Processor to select for programming with Arduino IDE

@@ -89,6 +89,7 @@ void sleepUntilMovement()
   { 
     initNRF();
 
+    vesc_battery = 101;
     system_locked = 1;
     isr_active = 1;
     delay(150); //150ms = all Buffers are fully renewed

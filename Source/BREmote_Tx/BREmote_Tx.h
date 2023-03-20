@@ -31,7 +31,7 @@ volatile uint8_t remote_error = 0;
 volatile uint8_t comm_errors = 0;
 volatile int err_cause = 0;
 
-volatile uint8_t vesc_battery = 99;
+volatile uint8_t vesc_battery = 101;
 volatile uint8_t internal_battery = 0;
 
 //Ring Buffer for Hall Sensors
