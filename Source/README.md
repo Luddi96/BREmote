@@ -1,4 +1,13 @@
+## How to upload bootloader
+Before you can use Arduino IDE to flash the firmware, you need to upload the bootloader to the BREmote once!
+For that, you need an AVR ISP or another Arduino.
+Note: You should do this, before soldering the NRF Module in place. Just take 6 wires and solder them directly to the pads. Upload bootloader and verify success. Afterwards, desolder the wires and solder NRF module into place.
+Note: If you have the accelerometer populated, flashing should be done at 3.3V (Arduino has 5V), you should use a level shifter on all SPI pins to avoid damage to the accelerometer IC.
+
+![ISP](ISPConnection.png)
+
 ## How to compile / upload
+
 Download Arduino IDE.
 In Arduino IDE, go to Sketch -> Add Library -> Search for "RF24" and Install "RF24" from TMRh20 (you'll need to scroll down a bit).
 

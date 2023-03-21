@@ -43,7 +43,7 @@
 ![Pinning1](https://github.com/Luddi96/BREmote/blob/main/img/pinning1.png) ![Pinning2](https://github.com/Luddi96/BREmote/blob/main/img/pinning2.png)
 
 ## Usage:
-- With the remote off, pust the toggle forward to turn it on
+- With the remote off, push the toggle forward to turn it on
 - As long as you keep the toggle forward, you will be shown the internal battery capacity in %
 - With `//#define NO_LOCK` disabled in SHARED_CONFIG.h:
 	- The remote will start in locked state
