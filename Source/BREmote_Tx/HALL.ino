@@ -21,7 +21,7 @@
 #ifdef NO_LOCK
   void checkToggleButton()
   {
-    if(remote_error == 0)
+    if(remote_error == 0 || remote_error_blocked == 1)
     {
       if(ctminus())
       {
@@ -93,17 +93,25 @@
         last_activity = millis();
       }
     }
-  }
-  else
-  {
-    if(ctminus() | ctplus())
+    else
     {
-      delay(500);
       if(ctminus() | ctplus())
       {
-        remote_error = 0;
-        displayError(19);
-        while(ctminus() | ctplus());
+        delay(500);
+        if(ctminus() | ctplus())
+        {
+          remote_error = 0;
+          displayError(19);
+          while(ctminus() | ctplus());
+          remote_error_blocked = 1;
+          unsigned long pushtime = millis();
+          while(millis() - pushtime < ERR_DELETE_TIME)
+          {
+            checkToggleButton();
+            delay(10);
+          }
+          remote_error_blocked = 0;
+        }
       }
     }
   }
@@ -155,7 +163,7 @@
     //System is NOT locked
     else
     {
-      if(remote_error == 0)
+      if(remote_error == 0 || remote_error_blocked == 1)
       {
         if(ctminus())
         {
@@ -251,6 +259,14 @@
             remote_error = 0;
             displayError(19);
             while(ctminus() | ctplus());
+            remote_error_blocked = 1;
+            unsigned long pushtime = millis();
+            while(millis() - pushtime < ERR_DELETE_TIME)
+            {
+              checkToggleButton();
+              delay(10);
+            }
+            remote_error_blocked = 0;
           }
         }
       }

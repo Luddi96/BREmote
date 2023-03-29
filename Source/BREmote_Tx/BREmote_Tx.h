@@ -28,6 +28,7 @@ volatile uint8_t tx_arr[] = {0x00, 0x00, 0xFF};
 uint8_t rx_arr[4];
 
 volatile uint8_t remote_error = 0;
+volatile bool remote_error_blocked = 0;
 volatile uint8_t comm_errors = 0;
 volatile int err_cause = 0;
 

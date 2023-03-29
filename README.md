@@ -84,6 +84,8 @@ A: Make sure you selected "Arduino Nano ATmega328P **(Old Bootloader)**"
 ---
 # Changelog:
 
+### 2023-03-30: [Source]
+- Add error timeout, to allow user to change gear during an error
 ### 2023-03-12: [Release V1.3]
 ### 2023-03-20: [Electronics - Rx]
 - Added components to make Water Ingress Detection (Wetness Sensor) more resitant to electromagnetic disturbance

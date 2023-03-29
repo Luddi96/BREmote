@@ -1,5 +1,5 @@
 /*
-    BREmote V1.1
+    BREmote Shared Config File
     Copyright (C) 2022 Ludwig Brechter (contact@lbre.de)
     
     This program is free software: you can redistribute it and/or modify
@@ -31,11 +31,11 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
  */
  
     // No locking function, as soon as remote is on, throttle is active
-      //#define NO_LOCK       
+    //#define NO_LOCK       
     
     // Hyteresis
-      #define TOG_DIFF 10 //Hysteresis for Toggle
-      #define TOG_STB_DIFF 10 //Hysteresis for Standby Toggle
+      #define TOG_DIFF 10                         //Hysteresis for Toggle
+      #define TOG_STB_DIFF 10                     //Hysteresis for Standby Toggle
     
     //Timings
       #define UNLOCK_TRIGGER_TIMEOUT 5000         //Time after unlock until trigger times out (ms)
@@ -43,6 +43,8 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
       
       #define GEAR_CHANGE_WAITTIME 100            //Time toggle needs to be pressed to change gear (ms)
       #define GEAR_DISPLAY_TIME 1000              //How long the new gear is shown (ms)
+
+      #define ERR_DELETE_TIME 2000                //How long the "E-" is shown after deleting an error. In this time, the user can also change gear, even if the error is still persistent (and therefore will be shown again after this time is over)
     
       #define NO_ACTIVITY_TIMEOUT 60000           //Turn off power if no button is pressed and receiver has no connection (ms)
     
@@ -60,15 +62,15 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
  */
 
     //VESC Battery Mapping
-      #define VESC_BAT_EMPTY_AT 180 //10*V (e.g. 200 = 20V)
-      #define VESC_BAT_FULL_AT 220  //10*V (e.g. 200 = 20V)
+      #define VESC_BAT_EMPTY_AT 180         //10*V (e.g. 200 = 20V)
+      #define VESC_BAT_FULL_AT 220          //10*V (e.g. 200 = 20V)
 
     //Wetness Detection
-      #define WETNESS_DET_ACTIVE    //If Wetness Detection should be active or not (generates E7)
-      #define WETNESS_SENS 500      //Wetness sensitivity. 0: Least sensitive, 1024: Most sensitive, good range: 100 to 500
-      #define WETNESS_HYST 50       //Wetness hysteresis. WETNESS_SENS - WETNESS_HYST must always be greater than 0, WETNESS_SENS + WETNESS_HYST must always be lower than 1024, good value: 50
+      #define WETNESS_DET_ACTIVE            //If Wetness Detection should be active or not (generates E7)
+      #define WETNESS_SENS 500              //Wetness sensitivity. 0: Least sensitive, 1024: Most sensitive, good range: 100 to 500
+      #define WETNESS_HYST 50               //Wetness hysteresis. WETNESS_SENS - WETNESS_HYST must always be greater than 0, WETNESS_SENS + WETNESS_HYST must always be lower than 1024, good value: 50
 
-      //#define BMS_DET_ACTIVE        //If External BMS Input should be read or not (generates E8)
+    //#define BMS_DET_ACTIVE                //If External BMS Input should be read or not (generates E8)
 /*
 * Error Codes (don't change)
 */
