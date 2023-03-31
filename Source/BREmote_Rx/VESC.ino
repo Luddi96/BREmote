@@ -16,6 +16,28 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+void getVescLoop()
+{
+  if(millis() - get_vesc_timer > 1000)
+  {
+    // Get Voltage from VESC
+    detachInterrupt(digitalPinToInterrupt(NRF_IRQ));
+    if( getValuesSelective(&vescSerial) )
+    {
+      updatePayload();
+      last_uart_packet = millis();
+    }
+    attachInterrupt(digitalPinToInterrupt(NRF_IRQ), radioInterrupt, FALLING);
+    get_vesc_timer = millis();
+  }
+
+  // Check for VESC connection break
+  if(millis() - last_uart_packet > 20000)
+  {
+    payload_arr[2] = 101;
+  }
+}
+
 //total 4.5ms
 bool getValuesSelective(Stream* interface)
 {

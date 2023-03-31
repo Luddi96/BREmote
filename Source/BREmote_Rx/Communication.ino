@@ -86,6 +86,6 @@ void radioInterrupt()
 
 void updatePayload()
 {
-  uint16_t batConst = constrain(batVolt, VESC_BAT_EMPTY_AT, VESC_BAT_FULL_AT);
-  payload_arr[2] = (uint8_t)map(batConst, VESC_BAT_EMPTY_AT, VESC_BAT_FULL_AT, 0, 99);
+  uint16_t batConst = constrain(batVolt, FOIL_BAT_EMPTY_AT, FOIL_BAT_FULL_AT);
+  payload_arr[2] = (uint8_t)map(batConst, FOIL_BAT_EMPTY_AT, FOIL_BAT_FULL_AT, 0, 99);
 }

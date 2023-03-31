@@ -49,7 +49,7 @@ volatile int16_t fetTemp = 0;
 volatile int32_t motCur = 0;
 volatile int32_t batCur = 0;
 volatile int16_t duty = 0;
-volatile int16_t batVolt = VESC_BAT_FULL_AT;
+volatile int16_t batVolt = FOIL_BAT_FULL_AT;
 volatile unsigned long get_vesc_timer = 0;
 volatile unsigned long last_uart_packet = 0;
 

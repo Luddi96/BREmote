@@ -60,10 +60,13 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
 /*
  * Rx Specific
  */
-
-    //VESC Battery Mapping
-      #define VESC_BAT_EMPTY_AT 180         //10*V (e.g. 200 = 20V)
-      #define VESC_BAT_FULL_AT 220          //10*V (e.g. 200 = 20V)
+    #define USE_VESC_UART                 //If VESC is connected via UART
+    
+    #define ANALOG_UBAT_FACTOR 0.853688     //Calibration factor for analog UBAT input, default: 0.025869
+    
+    //Foil Battery Mapping
+      #define FOIL_BAT_EMPTY_AT 180         //10*V (e.g. 200 = 20V)
+      #define FOIL_BAT_FULL_AT 220          //10*V (e.g. 200 = 20V)
 
     //Wetness Detection
       #define WETNESS_DET_ACTIVE            //If Wetness Detection should be active or not (generates E7)

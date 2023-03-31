@@ -96,6 +96,24 @@ void checkWetnessSensor()
   #endif
 }
 
+void getUbatLoop()
+{
+  if(millis() - get_vesc_timer > 1000)
+  {
+    uint16_t ubat_raw = analogRead(UBAT_MEAS);
+    ubat_raw += analogRead(UBAT_MEAS);
+    ubat_raw += analogRead(UBAT_MEAS);
+    ubat_raw += analogRead(UBAT_MEAS);
+  
+    ubat_raw /= 4;
+  
+    batVolt = (float)ubat_raw * ANALOG_UBAT_FACTOR;
+    
+    updatePayload();
+    get_vesc_timer = millis();
+  }
+}
+
 void setupTimer1()
 {
   //Set MEGA328 Timer 1 Mode: (Page 109 Datasheet)

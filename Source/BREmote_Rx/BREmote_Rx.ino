@@ -37,18 +37,14 @@ uint8_t dummy = 0;
 
 void loop() 
 {
-  if(millis() - get_vesc_timer > 1000)
-  {
-    // Get Voltage from VESC
-    detachInterrupt(digitalPinToInterrupt(NRF_IRQ));
-    if( getValuesSelective(&vescSerial) )
-    {
-      updatePayload();
-      last_uart_packet = millis();
-    }
-    attachInterrupt(digitalPinToInterrupt(NRF_IRQ), radioInterrupt, FALLING);
-    get_vesc_timer = millis();
-  }
+  //If a VESC is connected via UART read from there
+  #ifdef USE_VESC_UART
+  getVescLoop();
+  #else
+  //Else get voltage from analog input
+  getUbatLoop();
+  #endif
+  
 
   // Check if there is a error to be transmitted to remote
   checkWetnessSensor();
@@ -61,13 +57,7 @@ void loop()
   {
     payload_arr[1] = 0;
   }
-
-  // Check for VESC connection break
-  if(millis() - last_uart_packet > 20000)
-  {
-    payload_arr[2] = 101;
-  }
-
+  
   // Check for Failsafe
   if(millis() - last_packet > 2000)
   {

@@ -76,6 +76,22 @@
 | E7 | Water Ingress | Water on the water detection electrodes attached to the receiver. This feature can be disabled in code if you dont use it (default: enabled). |
 | E8 | BMS Fault | BMS has disabled its output connected to the receiver. This feature can be disabled in code if you dont use it (default: disabled). |
 
+# Connection Examples:
+
+<details>
+<summary>VESC with UART</summary>
+
+![Conn1](https://github.com/Luddi96/BREmote/blob/main/img/conn1.png)
+
+</details>
+
+<details>
+<summary>ESC or VESC WITHOUT UART</summary>
+
+![Conn2](https://github.com/Luddi96/BREmote/blob/main/img/conn2.png)
+
+</details>
+
 ---
 # FAQ:
 Q: When trying to program the remote with the Arduino IDE, I get an error "avrdude: stk500_getsync()"
@@ -83,7 +99,14 @@ A: Make sure you selected "Arduino Nano ATmega328P **(Old Bootloader)**"
 
 ---
 # Changelog:
-
+### 2023-03-31: [Release V1.4]
+### 2023-03-31: [Readme]
+- Added connection diagrams
+### 2023-03-31: [Source]
+- Made connection to VESC UART optional (defined in SHARED_CONFIG)
+- Added analog UBAT measurement
+### 2023-03-31: [Electronics - Rx]
+- Added component to make analog UBAT measurement more resitant to electromagnetic disturbance
 ### 2023-03-30: [Source]
 - Add error timeout, to allow user to change gear during an error
 ### 2023-03-12: [Release V1.3]
