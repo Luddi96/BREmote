@@ -1,6 +1,6 @@
-/* When flashing fails, select Processor: Aruino Nano (OLD BOOTLOADER)*/
-/* When flashing fails, select Processor: Aruino Nano (OLD BOOTLOADER)*/
-/* When flashing fails, select Processor: Aruino Nano (OLD BOOTLOADER)*/
+/* When flashing, select Processor: Aruino Nano (OLD BOOTLOADER)*/
+/* When flashing, select Processor: Aruino Nano (OLD BOOTLOADER)*/
+/* When flashing, select Processor: Aruino Nano (OLD BOOTLOADER)*/
 
 /*
     BREmote Rx
@@ -34,16 +34,31 @@ void setup()
 }
 
 uint8_t dummy = 0;
+unsigned long bat_sim_timer = 0;
+int bat_sim = 15;
 
 void loop() 
 {
+  /*
   //If a VESC is connected via UART read from there
   #ifdef USE_VESC_UART
   getVescLoop();
   #else
   //Else get voltage from analog input
   getUbatLoop();
-  #endif
+  #endif*/
+
+  if(millis()-bat_sim_timer > 1000)
+  {
+    bat_sim++;
+    bat_sim_timer = millis();
+  }
+  if(bat_sim > 95)
+  {
+    bat_sim = 15;
+  }
+
+  payload_arr[2] = bat_sim;
   
 
   // Check if there is a error to be transmitted to remote

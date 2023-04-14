@@ -1,5 +1,9 @@
+/* When flashing, select Processor: Aruino Nano (OLD BOOTLOADER)*/
+/* When flashing, select Processor: Aruino Nano (OLD BOOTLOADER)*/
+/* When flashing, select Processor: Aruino Nano (OLD BOOTLOADER)*/
+
 /*
-    BREmote V1.1
+    BREmote Tx
     Copyright (C) 2022 Ludwig Brechter (contact@lbre.de)
     
     This program is free software: you can redistribute it and/or modify
@@ -37,23 +41,45 @@ void setup()
   enableDisplay();
 }
 
-int16_t thr_demo = 0;
-int16_t tog_demo = 0;
 void loop() 
-{
-  thr_demo = (int16_t)thr_filter - 430;
-  tog_demo = (int16_t)tog_filter - 430;
-
-  thr_demo /= 20;
-  tog_demo /= 20;
-
-  thr_demo = constrain(thr_demo,0,9);
-  tog_demo = constrain(tog_demo,0,9);
-
-  CHAR1 = charset[thr_demo];
-  CHAR2 = charset[tog_demo];
-  
-  delay(100);
+{  
+  checkLastActivity();
+  checkBattery();
+  /*
+  if(poweroff)
+  {
+    powerOffAnimation();
+    sleepUntilMovement();
+  }
+  else*/
+  {
+    if(system_locked)
+    {
+      displayLock();
+    }
+    else
+    {
+      if(1)
+      {
+        if(remote_error)
+        {
+          displayError(remote_error);
+          blinkDot |= 0x04;
+        }
+        else
+        {
+          blinkDot &= 0xFB;
+          displayBattery(2);
+        }
+      }
+      else
+      {
+        displayError(err_cause);
+      }
+    }
+    //checkToggleButton();
+  }
+  delay(10);
 }
 
 ISR(WDT_vect) 
@@ -81,7 +107,7 @@ ISR(TIMER2_COMPA_vect)
       else
       {
         motordiv++;
-        digitalWrite(EN_MOT, LOW);
+        //digitalWrite(EN_MOT, LOW);
         mot_active = 0;
       }
       //1Hz

@@ -1,6 +1,6 @@
-/* When flashing fails, select Processor: Aruino Nano (OLD BOOTLOADER)*/
-/* When flashing fails, select Processor: Aruino Nano (OLD BOOTLOADER)*/
-/* When flashing fails, select Processor: Aruino Nano (OLD BOOTLOADER)*/
+/* When flashing, select Processor: Aruino Nano (OLD BOOTLOADER)*/
+/* When flashing, select Processor: Aruino Nano (OLD BOOTLOADER)*/
+/* When flashing, select Processor: Aruino Nano (OLD BOOTLOADER)*/
 
 /*
     BREmote Rx
@@ -39,7 +39,7 @@ void loop()
 {
   //If a VESC is connected via UART read from there
   #ifdef USE_VESC_UART
-  getVescLoop();
+  //getVescLoop();
   #else
   //Else get voltage from analog input
   getUbatLoop();
@@ -57,6 +57,8 @@ void loop()
   {
     payload_arr[1] = 0;
   }
+
+  Serial.println(millis() - last_packet);
   
   // Check for Failsafe
   if(millis() - last_packet > 2000)

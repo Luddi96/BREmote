@@ -18,6 +18,7 @@
 * [Promo Video](https://youtu.be/fF5BHrkHTNA)
 * [Overview + Build Video](https://youtu.be/kb76z3FXLc0)
 * [Deep Dive Video](https://youtu.be/cdQ3Ppyngpk)
+* [Update Video 04/2023](https://youtu.be/SpBOiRbGKgA)
 
 ## Parts needed:
 ### Electronics:

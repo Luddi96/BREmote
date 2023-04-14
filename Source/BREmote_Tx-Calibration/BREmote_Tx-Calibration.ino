@@ -1,6 +1,6 @@
-/* When flashing, select Processor: Aruino Nano (OLD BOOTLOADER)*/
-/* When flashing, select Processor: Aruino Nano (OLD BOOTLOADER)*/
-/* When flashing, select Processor: Aruino Nano (OLD BOOTLOADER)*/
+/* When flashing fails, select Processor: Aruino Nano (OLD BOOTLOADER)*/
+/* When flashing fails, select Processor: Aruino Nano (OLD BOOTLOADER)*/
+/* When flashing fails, select Processor: Aruino Nano (OLD BOOTLOADER)*/
 
 /*
     BREmote V1.1

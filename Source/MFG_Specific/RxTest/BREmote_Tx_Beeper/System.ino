@@ -39,25 +39,11 @@ void initReg()
 void initEEPROM()
 {
   DEBUG_PRINT("Reading calib. from EEPROM...");
-  if(EEPROM.read(EE_VAL_FLAG) == 0xBE)
-  {
-    if(EEPROM.read(EE_LEFTHANDER))
-    {
-      lefthander_ee = 1;
-    }
-    if(EEPROM.read(EE_THR_REV))
-    {
-      thr_rev_ee = 1;
-    }
-    if(EEPROM.read(EE_TOG_REV))
-    {
-      tog_rev_ee = 1;
-    }
   
-    thr_min_ee = ((uint16_t)EEPROM.read(EE_THR_MIN) << 8) + (uint16_t)EEPROM.read(EE_THR_MIN+1);
-    thr_max_ee = ((uint16_t)EEPROM.read(EE_THR_MAX) << 8) + (uint16_t)EEPROM.read(EE_THR_MAX+1);
-    tog_mid_ee = ((uint16_t)EEPROM.read(EE_TOG) << 8) + (uint16_t)EEPROM.read(EE_TOG+1);
-    tod_mid_stb_ee = ((uint16_t)EEPROM.read(EE_TOG_STB) << 8) + (uint16_t)EEPROM.read(EE_TOG_STB+1);
+    thr_min_ee = 400;
+    thr_max_ee = 600;
+    tog_mid_ee = 500;
+    tod_mid_stb_ee = 400;
 
     //Right Sensors: A0 and A2
     //Left Sensors: A1 and A7
@@ -73,14 +59,7 @@ void initEEPROM()
       pin_hall_tog = A0;
       pin_hall_tog_stb = A2;
     }
-  }
-  else
-  {
-    Serial.println("EEPROM Error");
-    CHAR1 = charset[LET_E];
-    CHAR2 = charset[ERR_EEPROM];
-    infiniteError();
-  }  
+ 
   DEBUG_PRINTLN("Done");
 }
 
@@ -210,7 +189,7 @@ void checkBattery()
     blinkDot &= 0xFE;
   }
 
-  if(vesc_battery < FOIL_VBAT_WARN_AT)
+  if(vesc_battery < VESC_VBAT_WARN_AT)
   {
     blinkDot |= 0x02;
   }

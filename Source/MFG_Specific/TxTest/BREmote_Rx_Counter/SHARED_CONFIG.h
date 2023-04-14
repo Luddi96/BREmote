@@ -52,7 +52,7 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
       #define INT_VBAT_CALIBRATION 0.004290224    //This converts ADC Bits to Voltage
       #define INT_VBAT_FULL_AT 410                //Voltage at which 1000% internal Battery is displayed (100*V) DEFAULT 410
       #define INT_VBAT_EMPTY_AT 340               //Voltage at which 0% internal Battery is displayed (Also the protection limit), MIN: 34V (100*V) DEFAULT 340
-      #define FOIL_VBAT_WARN_AT 10                //Percent at wich VESC Battery triggers a warning (%)
+      #define VESC_VBAT_WARN_AT 10                //Percent at wich VESC Battery triggers a warning (%)
     
     //For Debug, Viration Motor can be disabled
       #define MOTOR_ENABLED

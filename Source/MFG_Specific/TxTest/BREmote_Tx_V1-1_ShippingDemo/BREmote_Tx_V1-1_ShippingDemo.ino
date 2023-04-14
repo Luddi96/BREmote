@@ -1,9 +1,5 @@
-/* When flashing fails, select Processor: Aruino Nano (OLD BOOTLOADER)*/
-/* When flashing fails, select Processor: Aruino Nano (OLD BOOTLOADER)*/
-/* When flashing fails, select Processor: Aruino Nano (OLD BOOTLOADER)*/
-
 /*
-    BREmote Tx
+    BREmote V1.1
     Copyright (C) 2022 Ludwig Brechter (contact@lbre.de)
     
     This program is free software: you can redistribute it and/or modify
@@ -23,6 +19,7 @@
 #include "BREmote_Tx.h"
 
 RF24 radio(NRF_CE, NRF_CSN); // CE, CSN
+ADXL362 accel;
 
 void setup() 
 {
@@ -30,6 +27,16 @@ void setup()
   initReg();
   initPins();
   initNRF();
+  accel.begin(ACC_CS);
+  accel.beginMeasure();
+  Serial.println(accel.readTemp());
+  if(accel.readTemp() == 0)
+  {
+    DEBUG_PRINT("Error Acc");
+    CHAR1 = charset[LET_E];
+    CHAR2 = charset[2];
+    infiniteError();
+  }
   initEEPROM();
   setupTimer2();
   enablePower();
@@ -39,47 +46,29 @@ void setup()
   #endif
   delay(1000);
   enableDisplay();
+
+  digitalWrite(EN_MOT, HIGH);
+  delay(500);
+  digitalWrite(EN_MOT, LOW);
 }
 
+int16_t thr_demo = 0;
+int16_t tog_demo = 0;
 void loop() 
-{  
-  checkLastActivity();
-  checkBattery();
+{
+  thr_demo = (int16_t)thr_filter - 430;
+  tog_demo = (int16_t)tog_filter - 430;
+
+  thr_demo /= 20;
+  tog_demo /= 20;
+
+  thr_demo = constrain(thr_demo,0,9);
+  tog_demo = constrain(tog_demo,0,9);
+
+  CHAR1 = charset[thr_demo];
+  CHAR2 = charset[tog_demo];
   
-  if(poweroff)
-  {
-    powerOffAnimation();
-    sleepUntilMovement();
-  }
-  else
-  {
-    if(system_locked)
-    {
-      displayLock();
-    }
-    else
-    {
-      if(comm_errors < 100)
-      {
-        if(remote_error)
-        {
-          displayError(remote_error);
-          blinkDot |= 0x04;
-        }
-        else
-        {
-          blinkDot &= 0xFB;
-          displayBattery(2);
-        }
-      }
-      else
-      {
-        displayError(err_cause);
-      }
-    }
-    checkToggleButton();
-  }
-  delay(10);
+  delay(100);
 }
 
 ISR(WDT_vect) 

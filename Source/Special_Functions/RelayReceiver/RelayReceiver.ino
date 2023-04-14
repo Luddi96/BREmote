@@ -29,7 +29,7 @@
 #include "crc.h"
 
 
-RF24 radio(10,9);
+RF24 radio(10,7);
 
 byte addresses[][6] = {"BREAI","BREAR"};
 

@@ -24,14 +24,15 @@
 
 //0: Return Check to Receiver, 1: Throttle Value, 2: 0xFF
 volatile uint8_t tx_arr[] = {0x00, 0x00, 0xFF};
-//0: Check from Receiver, 1: Opcode from Receiver, 2: Battery from VESC, 3: 0xFF
+//0: Check from Receiver, 1: Rem.Err Code from Receiver, 2: Battery from VESC, 3: 0xFF
 uint8_t rx_arr[4];
 
-volatile uint8_t opcode = 0;
+volatile uint8_t remote_error = 0;
+volatile bool remote_error_blocked = 0;
 volatile uint8_t comm_errors = 0;
 volatile int err_cause = 0;
 
-volatile uint8_t vesc_battery = 99;
+volatile uint8_t vesc_battery = 101;
 volatile uint8_t internal_battery = 0;
 
 //Ring Buffer for Hall Sensors
@@ -137,7 +138,7 @@ uint8_t pin_hall_tog_stb = 0;
  * Display Stuff
  */
 
-uint8_t charset[] = {0xfa, 0x0a, 0xb3, 0x9b, 0x4b, 0xd9, 0xf9, 0x1a, 0xfb, 0xdb, 0x7b, 0xf0, 0xf1, 0x71, 0x6b, 0xe0, 0x73, 0xea, 0x00}; 
+uint8_t charset[] = {0xfa, 0x0a, 0xb3, 0x9b, 0x4b, 0xd9, 0xf9, 0x1a, 0xfb, 0xdb, 0x7b, 0xf0, 0xf1, 0x71, 0x6b, 0xe0, 0x73, 0xea, 0x00, 0x01}; 
 #define LET_A 10
 #define LET_C 11
 #define LET_E 12
@@ -147,14 +148,7 @@ uint8_t charset[] = {0xfa, 0x0a, 0xb3, 0x9b, 0x4b, 0xd9, 0xf9, 0x1a, 0xfb, 0xdb,
 #define LET_P 16
 #define LET_U 17
 #define BLANK 18
-
-/*
- * Error Codes (don't change)
- */
-#define ERR_PACKET_CONTENT 3
-#define ERR_NO_ACK 4
-#define ERR_EEPROM 5
-#define ERR_NRF 6
+#define DASH 19
 
 /*
  * Debug
