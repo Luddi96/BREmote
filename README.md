@@ -100,6 +100,9 @@ A: Make sure you selected "Arduino Nano ATmega328P **(Old Bootloader)**"
 
 ---
 # Changelog:
+### 2023-04-14: [Release V1.4.1]
+### 2023-04-14: [Source - Rx]
+- Increased NRF interrupt-to-readout delay
 ### 2023-03-31: [Release V1.4]
 ### 2023-03-31: [Readme]
 - Added connection diagrams
