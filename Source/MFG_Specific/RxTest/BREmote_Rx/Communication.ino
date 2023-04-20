@@ -43,7 +43,7 @@ void initNRF()
 //approx. 500us
 void radioInterrupt()
 {
-  delayMicroseconds(250);
+  delayMicroseconds(500);
   bool tx_ds, tx_df, rx_dr;
   radio.whatHappened(tx_ds, tx_df, rx_dr);
 

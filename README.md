@@ -17,6 +17,7 @@
 ## Links:
 * [Promo Video](https://youtu.be/fF5BHrkHTNA)
 * [Overview + Build Video](https://youtu.be/kb76z3FXLc0)
+* [Updated Build Video](https://youtu.be/RKn8jVGVD6g)
 * [Deep Dive Video](https://youtu.be/cdQ3Ppyngpk)
 * [Update Video 04/2023](https://youtu.be/SpBOiRbGKgA)
 

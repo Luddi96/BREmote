@@ -19,7 +19,8 @@
 /*
  * This is the only file a user should make changes
  */
-
+#error "Please change the adresses below to someting unique for your setup!! Do so both in Tx and Rx SHARED_CONFIG.h! Then delete this line"
+//These Adresses need to consist of exactly 5 letters or numbers
 uint8_t rxAddr[6] = {"BREAI"}; //From Rx To Tx (Board to Remote)
 uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
 
@@ -34,8 +35,8 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
     //#define NO_LOCK       
     
     // Hyteresis
-      #define TOG_DIFF 10                         //Hysteresis for Toggle
-      #define TOG_STB_DIFF 10                     //Hysteresis for Standby Toggle
+      #define TOG_DIFF 8                         //Hysteresis for Toggle
+      #define TOG_STB_DIFF 8                     //Hysteresis for Standby Toggle
     
     //Timings
       #define UNLOCK_TRIGGER_TIMEOUT 5000         //Time after unlock until trigger times out (ms)
