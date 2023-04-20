@@ -118,6 +118,8 @@ void enablePower()
   if(!power_enabled)
   {
     digitalWrite(EN_PWR, HIGH);
+    pinMode(SPI_MOSI, OUTPUT);
+    
     delay(100);
     power_enabled = 1;
   }
@@ -140,6 +142,8 @@ void disablePower()
   digitalWrite(ACC_IRQ, LOW);
   digitalWrite(SR_DAT, LOW);
   digitalWrite(SR_CLK, LOW);
+
+  pinMode(SPI_MOSI, INPUT);
 }
 
 /*Init Pins*/

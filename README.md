@@ -101,6 +101,13 @@ A: Make sure you selected "Arduino Nano ATmega328P **(Old Bootloader)**"
 
 ---
 # Changelog:
+
+### 2023-04-14: [Release V1.4.2]
+### 2023-04-14: [Source]
+- Set MOSI Pin to "Input" in standby (Critical fix, as this could damage battery)
+### 2023-04-14: [Source]
+- Add compiler error if address is not changed
+- Increase tolerances on some values
 ### 2023-04-14: [Release V1.4.1]
 ### 2023-04-14: [Source - Rx]
 - Increased NRF interrupt-to-readout delay
