@@ -43,7 +43,13 @@ void initNRF()
 //approx. 500us
 void radioInterrupt()
 {
-  delayMicroseconds(500);
+  #ifdef STEERING_ENABLED
+    digitalWrite(EN_AUX1, LOW);
+    delayMicroseconds(STEER_LOWEND + (rx_arr[3]<<STEER_MULTIPLIER));
+    digitalWrite(EN_AUX1, HIGH);
+  #else
+    delayMicroseconds(500);
+  #endif
   bool tx_ds, tx_df, rx_dr;
   radio.whatHappened(tx_ds, tx_df, rx_dr);
 

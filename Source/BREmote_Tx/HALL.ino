@@ -23,63 +23,27 @@
   {
     if(remote_error == 0 || remote_error_blocked == 1)
     {
-      if(ctminus())
+      if(!toggle_blocked_by_steer)
       {
-        delay(50);
-        unsigned long pushtime = millis();
-        //Minus only decreases gear
-        while(ctminus())
+        if(ctminus())
         {
-          delay(10);
-          if(millis() - pushtime > GEAR_CHANGE_WAITTIME)
+          delay(50);
+          unsigned long pushtime = millis();
+          //Minus only decreases gear
+          while(ctminus())
           {
-            break;
-          }
-        }
-        if (millis() - pushtime > GEAR_CHANGE_WAITTIME)
-        {
-          if(gear > 1) gear --;
-          showNewGear();
-        }
-        while(ctminus())
-        {
-          delay(10);
-        }
-        delay(50);
-        while(millis() - pushtime < GEAR_DISPLAY_TIME)
-        {
-          checkToggleButton();
-          delay(10);
-        }
-        last_activity = millis();
-      }
-      else if(ctplus())
-      {
-        delay(50);
-        unsigned long pushtime = millis();
-        bool increase_once = 1;
-        //Plus decreases gear, holding powers off
-        while(ctplus())
-        {
-          delay(10);
-          if(millis() - pushtime > LOCK_PWR_WAITTIME)
-          {
-            poweroff = 1;
-            break;
-          }
-          if(millis() - pushtime > GEAR_CHANGE_WAITTIME)
-          {
-            if(increase_once)
+            delay(10);
+            if(millis() - pushtime > GEAR_CHANGE_WAITTIME)
             {
-              if(gear < 10) gear ++;
-              showNewGear();
-              increase_once = 0;
+              break;
             }
           }
-        }
-        if(!(millis() - pushtime > LOCK_PWR_WAITTIME))
-        {
-          while(ctplus())
+          if (millis() - pushtime > GEAR_CHANGE_WAITTIME)
+          {
+            if(gear > 1) gear --;
+            showNewGear();
+          }
+          while(ctminus())
           {
             delay(10);
           }
@@ -89,8 +53,47 @@
             checkToggleButton();
             delay(10);
           }
+          last_activity = millis();
         }
-        last_activity = millis();
+        else if(ctplus())
+        {
+          delay(50);
+          unsigned long pushtime = millis();
+          bool increase_once = 1;
+          //Plus decreases gear, holding powers off
+          while(ctplus())
+          {
+            delay(10);
+            if(millis() - pushtime > LOCK_PWR_WAITTIME)
+            {
+              poweroff = 1;
+              break;
+            }
+            if(millis() - pushtime > GEAR_CHANGE_WAITTIME)
+            {
+              if(increase_once)
+              {
+                if(gear < 10) gear ++;
+                showNewGear();
+                increase_once = 0;
+              }
+            }
+          }
+          if(!(millis() - pushtime > LOCK_PWR_WAITTIME))
+          {
+            while(ctplus())
+            {
+              delay(10);
+            }
+            delay(50);
+            while(millis() - pushtime < GEAR_DISPLAY_TIME)
+            {
+              checkToggleButton();
+              delay(10);
+            }
+          }
+          last_activity = millis();
+        }
       }
     }
     else
@@ -165,88 +168,91 @@
     {
       if(remote_error == 0 || remote_error_blocked == 1)
       {
-        if(ctminus())
+        if(!toggle_blocked_by_steer)
         {
-          delay(50);
-          unsigned long pushtime = millis();
-          bool decrease_once = 1;
-          //minus decreases gear, holding locks system
-          while(ctminus())
+          if(ctminus())
           {
-            delay(10);
-            if(millis() - pushtime > LOCK_PWR_WAITTIME)
-            {
-              system_locked = 1;
-              displayLock();
-              while(ctminus())
-              {
-                delay(100);
-              }
-              break;
-            }
-            if(millis() - pushtime > GEAR_CHANGE_WAITTIME)
-            {
-              if(decrease_once)
-              {
-                if(gear > 1) gear --;
-                showNewGear();
-                decrease_once = 0;
-              }
-            }
-          }
-          if(!(millis() - pushtime > LOCK_PWR_WAITTIME))
-          {
+            delay(50);
+            unsigned long pushtime = millis();
+            bool decrease_once = 1;
+            //minus decreases gear, holding locks system
             while(ctminus())
             {
               delay(10);
-            }
-            delay(50);
-            while(millis() - pushtime < GEAR_DISPLAY_TIME)
-            {
-              checkToggleButton();
-              delay(10);
-            }
-          }
-          last_activity = millis();
-        }
-        else if(ctplus())
-        {
-          delay(50);
-          unsigned long pushtime = millis();
-          bool increase_once = 1;
-          //Plus decreases gear, holding powers off
-          while(ctplus())
-          {
-            delay(10);
-            if(millis() - pushtime > LOCK_PWR_WAITTIME)
-            {
-              poweroff = 1;
-              break;
-            }
-            if(millis() - pushtime > GEAR_CHANGE_WAITTIME)
-            {
-              if(increase_once)
+              if(millis() - pushtime > LOCK_PWR_WAITTIME)
               {
-                if(gear < 10) gear ++;
-                showNewGear();
-                increase_once = 0;
+                system_locked = 1;
+                displayLock();
+                while(ctminus())
+                {
+                  delay(100);
+                }
+                break;
+              }
+              if(millis() - pushtime > GEAR_CHANGE_WAITTIME)
+              {
+                if(decrease_once)
+                {
+                  if(gear > 1) gear --;
+                  showNewGear();
+                  decrease_once = 0;
+                }
               }
             }
+            if(!(millis() - pushtime > LOCK_PWR_WAITTIME))
+            {
+              while(ctminus())
+              {
+                delay(10);
+              }
+              delay(50);
+              while(millis() - pushtime < GEAR_DISPLAY_TIME)
+              {
+                checkToggleButton();
+                delay(10);
+              }
+            }
+            last_activity = millis();
           }
-          if(!(millis() - pushtime > LOCK_PWR_WAITTIME))
+          else if(ctplus())
           {
+            delay(50);
+            unsigned long pushtime = millis();
+            bool increase_once = 1;
+            //Plus decreases gear, holding powers off
             while(ctplus())
             {
               delay(10);
+              if(millis() - pushtime > LOCK_PWR_WAITTIME)
+              {
+                poweroff = 1;
+                break;
+              }
+              if(millis() - pushtime > GEAR_CHANGE_WAITTIME)
+              {
+                if(increase_once)
+                {
+                  if(gear < 10) gear ++;
+                  showNewGear();
+                  increase_once = 0;
+                }
+              }
             }
-            delay(50);
-            while(millis() - pushtime < GEAR_DISPLAY_TIME)
+            if(!(millis() - pushtime > LOCK_PWR_WAITTIME))
             {
-              checkToggleButton();
-              delay(10);
+              while(ctplus())
+              {
+                delay(10);
+              }
+              delay(50);
+              while(millis() - pushtime < GEAR_DISPLAY_TIME)
+              {
+                checkToggleButton();
+                delay(10);
+              }
             }
+            last_activity = millis();
           }
-          last_activity = millis();
         }
       }
       else
@@ -310,8 +316,61 @@ void calcFilter()
     thr_float = (float)thr_filter - (float)thr_min_ee;
   }
 
-  uint16_t thr_tomap = (uint16_t)(constrain(thr_float,0.0,(float)thr_max_ee-thr_min_ee)*(float)gear);
+  uint16_t thr_tomap = (uint16_t)( constrain(thr_float,0.0,(float)thr_max_ee-thr_min_ee) * (float)gear);
   thr_scaled = (uint8_t)map(thr_tomap, 0, (thr_max_ee-thr_min_ee)*10, 0, 255);
+
+  #ifdef STEERING_ENABLED
+    if(tog_rev_ee)
+    {
+      steer_float = (float)tog_mid_ee - (float)tog_filter;
+    }
+    else
+    {
+      steer_float = (float)tog_filter - (float)tog_mid_ee;
+    }
+  
+    //Check if thr is touched
+    if(thr_scaled > 10 && system_locked == 0)
+    {
+      //If so, block steer and reset counter
+      toggle_blocked_by_steer = 1;
+      toggle_blocked_counter = 0;
+    }
+    else
+    {
+      //If trigger was released, increment
+      if(toggle_blocked_counter < TOGGLE_BLOCK_TIME)
+      {
+        toggle_blocked_counter ++;
+      }
+      //Until TOGGLE_BLOCK_TIME reached, then unlock toggle
+      else
+      {
+        toggle_blocked_by_steer = 0;
+      }
+    }
+    if(toggle_blocked_by_steer)
+    {
+      if(steer_float > STEER_DEADZONE)
+      {
+        int16_t steer_deadzone = (int16_t)(constrain(steer_float-STEER_DEADZONE,0.0,STEER_TOG_DIFF-STEER_DEADZONE));
+        steer_scaled = (uint8_t)map(steer_deadzone, 0, STEER_TOG_DIFF-STEER_DEADZONE,127,255);
+      }
+      else if (steer_float < -STEER_DEADZONE)
+      {
+        int16_t steer_deadzone = (int16_t)(constrain(steer_float+STEER_DEADZONE,-STEER_TOG_DIFF+STEER_DEADZONE,0.0));
+        steer_scaled = (uint8_t)map(steer_deadzone, -STEER_TOG_DIFF+STEER_DEADZONE, 0,0,127);
+      }
+      else
+      {
+        steer_scaled = 127;
+      } 
+    }
+    else
+    {
+      steer_scaled = 127;
+    }
+  #endif
 }
 
 bool checkToggle(bool precise)

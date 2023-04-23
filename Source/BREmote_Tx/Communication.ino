@@ -19,8 +19,16 @@
 void sendValues()
 {
   //Write throttle value into array
-  if(system_locked) tx_arr[1] = 0;
-  else tx_arr[1] = thr_scaled;
+  if(system_locked)
+  {
+    tx_arr[1] = 0;
+    tx_arr[3] = 127;
+  }
+  else
+  {
+    tx_arr[1] = thr_scaled;
+    tx_arr[3] = steer_scaled;
+  }
   //Send
   if (radio.write(&tx_arr, sizeof(tx_arr))) 
   {

@@ -37,7 +37,7 @@
 // 0: Check to Remote, 1: Rem.Err Code, 2: Battery VESC, 3: 0xFF
 volatile uint8_t payload_arr[] = {0x0B, 0x00, 101, 0xFF};
 // 0: Check from Remote, 1: Trigger value, 2: 0xFF
-volatile uint8_t rx_arr[3];
+volatile uint8_t rx_arr[4];
 volatile uint8_t last_check = payload_arr[0];
 
 volatile int errorToSend = -1;
@@ -83,6 +83,9 @@ volatile bool failsafe = 1;
 #define OCR1A_FAILSAFE 2000
 #define OCR1A_MID 3000
 #define OCR1A_MULTIPLIER 2
+
+#define STEER_LOWEND 950
+#define STEER_MULTIPLIER 2
 
 //Analog
 #define BMS_MEAS A0

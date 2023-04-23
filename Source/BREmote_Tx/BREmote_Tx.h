@@ -22,8 +22,8 @@
  * Variables
  */
 
-//0: Return Check to Receiver, 1: Throttle Value, 2: 0xFF
-volatile uint8_t tx_arr[] = {0x00, 0x00, 0xFF};
+//0: Return Check to Receiver, 1: Throttle Value, 2: 0xFF, 3: Steering
+volatile uint8_t tx_arr[] = {0x00, 0x00, 0xFF, 0x00};
 //0: Check from Receiver, 1: Rem.Err Code from Receiver, 2: Battery from VESC, 3: 0xFF
 uint8_t rx_arr[4];
 
@@ -46,6 +46,9 @@ volatile float thr_float = 0;
 volatile uint8_t thr_scaled = 0;
 volatile int filter_count = 0;
 
+volatile float steer_float = 0;
+volatile uint8_t steer_scaled = 0;
+
 volatile bool isr_active = 1;
 
 volatile uint8_t gear = 1;
@@ -54,6 +57,9 @@ volatile bool system_locked = 1;
 volatile bool poweroff = 0;
 
 volatile bool power_enabled = 0;
+
+volatile uint16_t toggle_blocked_counter = 0;
+volatile bool toggle_blocked_by_steer = 0;
 
 //Display Variables
 volatile uint8_t CHAR1 = 0x00;

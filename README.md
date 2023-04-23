@@ -20,15 +20,16 @@
 * [Updated Build Video](https://youtu.be/RKn8jVGVD6g)
 * [Deep Dive Video](https://youtu.be/cdQ3Ppyngpk)
 * [Update Video 04/2023](https://youtu.be/SpBOiRbGKgA)
+* [Steering & Long Range Update Video](https://youtu.be/DhPk98Wdcn0)
 
 ## Parts needed:
 ### Electronics:
 * [Tx & Rx PCBs, order at JLCPCB, Gerbers see releases](https://github.com/Luddi96/BREmote/releases)
 	* [Instruction how to order at JLC](https://youtu.be/y3GviDr0o1s)
-* [SMD NRF24L01 Module with onboard antenna](https://de.aliexpress.com/item/1005004905334589.html)
-* [SMD NRF24L01 Module with external antenna](https://de.aliexpress.com/item/1005004905334589.html)
-* [IPEX Antenna for NRF](https://de.aliexpress.com/item/1005003399563785.html)
-* [0.36" 2-digit, 7-Segment Display, Common Cathode](https://de.aliexpress.com/item/1005003639616635.html)
+* [Tx wireless module "Color: NRF24L01 SMD"](https://de.aliexpress.com/item/1005004905334589.html)
+* [Rx wireless module "Color: GT-24 SMD"](https://de.aliexpress.com/item/1005004905334589.html)
+* [IPEX Antenna for Rx](https://de.aliexpress.com/item/1005003399563785.html)
+* [0.36" 2-digit, 7-Segment Display, Common Cathode "CC"](https://de.aliexpress.com/item/32730115504.html)
 * [2x SMD Header, 2x5-pin](https://de.aliexpress.com/item/32336498109.html)
 * [EITHER Connector SP13 4-pin](https://de.aliexpress.com/item/1005001891060229.html)
 * [OR Magnetic Connector](https://de.aliexpress.com/item/4001283688823.html)
@@ -38,7 +39,7 @@
 ### Mechanics:
 * [2x Magnet N52 D3x6mm](https://www.ebay.de/itm/162903572491?var=461969545239)
 * [2x Self-Threading Screw DIN7982 2.2x6.5mm](https://www.ebay.de/itm/272909463518?epid=17007662352)
-* [PU Foam, ~Factor 15, e.g. Talamex 45729200](https://www.tradeinn.com/waveinn/en/talamex-pu-foam/138533717/p)
+* [PU Foam, ~Factor 15, e.g. Talamex 45729200](https://www.boatcareshop.nl/bootverf-bootlak/talamex-pu-schuim-2-componenten-200-cc)
 * [3D Printed Parts, see releases](https://github.com/Luddi96/BREmote/releases)
 
 ## Recommended Connector Pinning:
@@ -102,6 +103,11 @@ A: Make sure you selected "Arduino Nano ATmega328P **(Old Bootloader)**"
 ---
 # Changelog:
 
+### 2023-04-23: [Release V1.5]
+### 2023-04-23: [Source]
+- Added Steering Function (see [update video](https://youtu.be/DhPk98Wdcn0) )
+### 2023-04-23: [Electronics - Tx]
+- Added longrange (LR) version of Tx board (uses same NRF module like Rx)
 ### 2023-04-14: [Release V1.4.2]
 ### 2023-04-14: [Source]
 - Set MOSI Pin to "Input" in standby (Critical fix, as this could damage battery)

@@ -26,17 +26,24 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
 
 //Output Debug Information
   #define DEBUG
+  
+  //#define STEERING_ENABLED                    //If steering feature is enable (see also fine tuning at "Tx Specific")
 
 /*
  * Tx Specific
  */
  
     // No locking function, as soon as remote is on, throttle is active
-    //#define NO_LOCK       
+      //#define NO_LOCK       
     
     // Hyteresis
-      #define TOG_DIFF 8                         //Hysteresis for Toggle
-      #define TOG_STB_DIFF 8                     //Hysteresis for Standby Toggle
+      #define TOG_DIFF 8                          //Hysteresis for Toggle
+      #define TOG_STB_DIFF 8                      //Hysteresis for Standby Toggle
+
+    // Steering Feature (e.g. for tow boogies) - Enable at top of this file
+      #define STEER_TOG_DIFF 15                   //Sensitivity of Steering
+      #define STEER_DEADZONE 3                    //Deadzone for steering
+      #define TOGGLE_BLOCK_TIME 500               //How long toogle button is in steering (*10ms)
     
     //Timings
       #define UNLOCK_TRIGGER_TIMEOUT 5000         //Time after unlock until trigger times out (ms)

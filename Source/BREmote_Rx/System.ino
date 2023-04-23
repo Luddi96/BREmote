@@ -26,6 +26,10 @@ void initPins()
   
   pinMode(NRF_IRQ, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(NRF_IRQ), radioInterrupt, FALLING);
+
+  #ifdef STEERING_ENABLED
+    pinMode(EN_AUX1, OUTPUT);
+  #endif
   
   DEBUG_PRINTLN("Done");
 }
