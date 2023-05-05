@@ -66,7 +66,7 @@
             delay(10);
             if(millis() - pushtime > LOCK_PWR_WAITTIME)
             {
-              poweroff = 1;
+              if(thr_scaled < 10) poweroff = 1;
               break;
             }
             if(millis() - pushtime > GEAR_CHANGE_WAITTIME)
@@ -181,8 +181,11 @@
               delay(10);
               if(millis() - pushtime > LOCK_PWR_WAITTIME)
               {
-                system_locked = 1;
-                displayLock();
+                if(thr_scaled < 10)
+                {
+                  system_locked = 1;
+                  displayLock();
+                }
                 while(ctminus())
                 {
                   delay(100);
@@ -225,7 +228,7 @@
               delay(10);
               if(millis() - pushtime > LOCK_PWR_WAITTIME)
               {
-                poweroff = 1;
+                if(thr_scaled < 10) poweroff = 1;
                 break;
               }
               if(millis() - pushtime > GEAR_CHANGE_WAITTIME)
@@ -299,11 +302,43 @@ void calcFilter()
   thr_filter = tog_filter = intbat_filter = 0;
   for(int i = 0; i < 10; i++)
   {
-    thr_filter += thr_raw[i];
+    #ifndef TOTO_MODE
+      thr_filter += thr_raw[i];
+    #endif
     tog_filter += tog_raw[i];
     intbat_filter += intbat_raw[i];
   }
-  thr_filter /= 10;
+
+  #ifdef TOTO_MODE
+    if(filter_count == 0)
+    {
+      thr_filter += thr_raw[7];
+      thr_filter += thr_raw[8];
+      thr_filter += thr_raw[9];
+    }
+    else if(filter_count == 1)
+    {
+      thr_filter += thr_raw[8];
+      thr_filter += thr_raw[9];
+      thr_filter += thr_raw[0];
+    }
+    else if(filter_count == 2)
+    {
+      thr_filter += thr_raw[9];
+      thr_filter += thr_raw[0];
+      thr_filter += thr_raw[1];
+    }
+    else
+    {
+      thr_filter += thr_raw[filter_count-3];
+      thr_filter += thr_raw[filter_count-2];
+      thr_filter += thr_raw[filter_count-1];
+    }
+     thr_filter /= 3;
+  #else
+    thr_filter /= 10;
+  #endif
+  
   tog_filter /= 10;
   intbat_filter /= 10;
 

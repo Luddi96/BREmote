@@ -35,7 +35,7 @@ void setup()
   enablePower();
   #ifdef NO_LOCK
     system_locked = 0;
-    gear = 9;
+    gear = 10;
   #endif
   delay(1000);
   enableDisplay();
@@ -45,7 +45,7 @@ void loop()
 {  
   checkLastActivity();
   checkBattery();
-  
+
   if(poweroff)
   {
     powerOffAnimation();

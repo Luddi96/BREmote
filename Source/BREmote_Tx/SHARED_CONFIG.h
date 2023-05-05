@@ -35,7 +35,10 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
  
     // No locking function, as soon as remote is on, throttle is active
       //#define NO_LOCK       
-    
+
+    // Toto mode (Throttle is a different sensor from 0 to 3.3V)
+      //#define TOTO_MODE
+      
     // Hyteresis
       #define TOG_DIFF 8                          //Hysteresis for Toggle
       #define TOG_STB_DIFF 8                      //Hysteresis for Standby Toggle
@@ -58,7 +61,7 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
     
     //Internal Battery measurement
       #define INT_VBAT_CALIBRATION 0.004290224    //This converts ADC Bits to Voltage
-      #define INT_VBAT_FULL_AT 410                //Voltage at which 1000% internal Battery is displayed (100*V) DEFAULT 410
+      #define INT_VBAT_FULL_AT 410                //Voltage at which 100% internal Battery is displayed (100*V) DEFAULT 410
       #define INT_VBAT_EMPTY_AT 340               //Voltage at which 0% internal Battery is displayed (Also the protection limit), MIN: 34V (100*V) DEFAULT 340
       #define FOIL_VBAT_WARN_AT 10                //Percent at wich VESC Battery triggers a warning (%)
     

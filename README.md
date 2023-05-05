@@ -25,7 +25,7 @@
 ## Parts needed:
 ### Electronics:
 * [Tx & Rx PCBs, order at JLCPCB, Gerbers see releases](https://github.com/Luddi96/BREmote/releases)
-	* [Instruction how to order at JLC](https://youtu.be/y3GviDr0o1s)
+	* [Instruction how to order at JLC (only do Step 2&4)](https://youtu.be/y3GviDr0o1s)
 * [Tx wireless module "Color: NRF24L01 SMD"](https://de.aliexpress.com/item/1005004905334589.html)
 * [Rx wireless module "Color: GT-24 SMD"](https://de.aliexpress.com/item/1005004905334589.html)
 * [IPEX Antenna for Rx](https://de.aliexpress.com/item/1005003399563785.html)
@@ -103,6 +103,10 @@ A: Make sure you selected "Arduino Nano ATmega328P **(Old Bootloader)**"
 ---
 # Changelog:
 
+### 2023-05-05: [Release V1.5.1]
+### 2023-05-05: [Source - Tx]
+- Added "Toto mode" (less filtering for another throttle sensing concept)
+- Disable Lock & Poweroff when riding (when throttle is engaged)
 ### 2023-04-23: [Release V1.5]
 ### 2023-04-23: [Source]
 - Added Steering Function (see [update video](https://youtu.be/DhPk98Wdcn0) )
