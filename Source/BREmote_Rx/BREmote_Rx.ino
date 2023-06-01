@@ -47,8 +47,11 @@ void loop()
   
 
   // Check if there is a error to be transmitted to remote
-  checkWetnessSensor();
-  checkBMS();
+  if(millis() > 5000)
+  {
+    checkWetnessSensor();
+    checkBMS();
+  }
   if(errorToSend != -1)
   {
     payload_arr[1] = errorToSend;

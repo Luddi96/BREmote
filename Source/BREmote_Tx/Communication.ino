@@ -46,6 +46,7 @@ void sendValues()
           remote_error = rx_arr[1];
         }
         vesc_battery = rx_arr[2];
+        vesc_temp = rx_arr[4];
         if(comm_errors >= 250) comm_errors = 249;
         if(comm_errors > 0) comm_errors--;
         last_activity = millis();

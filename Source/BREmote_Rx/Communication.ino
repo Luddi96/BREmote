@@ -94,4 +94,5 @@ void updatePayload()
 {
   uint16_t batConst = constrain(batVolt, FOIL_BAT_EMPTY_AT, FOIL_BAT_FULL_AT);
   payload_arr[2] = (uint8_t)map(batConst, FOIL_BAT_EMPTY_AT, FOIL_BAT_FULL_AT, 0, 99);
+  payload_arr[4] = (uint8_t)constrain(fetTemp/10, 0, 99);
 }

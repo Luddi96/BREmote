@@ -18,8 +18,55 @@
 
 //Following block is the main user interface (plus, minus, on, lock, etc.)
 
-#ifdef NO_LOCK
-  void checkToggleButton()
+
+void checkToggleButton()
+{
+  if(system_locked)
+  {
+    if(ctminus())
+    {
+      delay(300);
+      if(ctminus())
+      {
+        //To unlock, promt user to touch throttle once
+        CHAR1 = CHAR2 = charset[LET_P];
+        unsigned long timeout = millis();
+        while(thr_scaled < 20 && (millis()-timeout < UNLOCK_TRIGGER_TIMEOUT))
+        {
+          delay(100);
+        }
+        if(millis()-timeout < UNLOCK_TRIGGER_TIMEOUT)
+        {
+          CHAR1 = (1<<5 | 1<<7);
+          CHAR2 = (1<<3 | 1<<7);
+          delay(500);
+          while(thr_scaled > 5)
+          {
+            delay(100);
+          }
+          gear = STARTGEAR+1;
+          showNewGear();
+          delay(1000);
+          system_locked = 0;
+        }
+      }
+      last_activity = millis();
+    }
+    else if(ctplus())
+    {
+      #ifndef NO_POWERBUTTON
+      //In lock state, holding powers off
+      delay(LOCK_PWR_WAITTIME);
+      if(ctplus())
+      {
+        poweroff = 1;
+      }
+      #endif
+      last_activity = millis();
+    }
+  }
+  //System is NOT locked
+  else
   {
     if(remote_error == 0 || remote_error_blocked == 1)
     {
@@ -29,29 +76,50 @@
         {
           delay(50);
           unsigned long pushtime = millis();
-          //Minus only decreases gear
+          bool decrease_once = 1;
+          //minus decreases gear, holding locks system
           while(ctminus())
           {
             delay(10);
-            if(millis() - pushtime > GEAR_CHANGE_WAITTIME)
+            if(millis() - pushtime > LOCK_PWR_WAITTIME)
             {
+              if(thr_scaled < 10)
+              {
+                #ifndef NO_LOCK
+                system_locked = 1;
+                displayLock();
+                #endif
+              }
+              while(ctminus())
+              {
+                delay(100);
+              }
               break;
             }
+            if(millis() - pushtime > GEAR_CHANGE_WAITTIME)
+            {
+              if(decrease_once)
+              {
+                #ifndef NO_GEARS
+                if(gear > 1) gear --;
+                showNewGear();
+                decrease_once = 0;
+                #endif
+              }
+            }
           }
-          if (millis() - pushtime > GEAR_CHANGE_WAITTIME)
+          if(!(millis() - pushtime > LOCK_PWR_WAITTIME))
           {
-            if(gear > 1) gear --;
-            showNewGear();
-          }
-          while(ctminus())
-          {
-            delay(10);
-          }
-          delay(50);
-          while(millis() - pushtime < GEAR_DISPLAY_TIME)
-          {
-            checkToggleButton();
-            delay(10);
+            while(ctminus())
+            {
+              delay(10);
+            }
+            delay(50);
+            while(millis() - pushtime < GEAR_DISPLAY_TIME)
+            {
+              checkToggleButton();
+              delay(10);
+            }
           }
           last_activity = millis();
         }
@@ -66,16 +134,20 @@
             delay(10);
             if(millis() - pushtime > LOCK_PWR_WAITTIME)
             {
+              #ifndef NO_POWERBUTTON
               if(thr_scaled < 10) poweroff = 1;
+              #endif
               break;
             }
             if(millis() - pushtime > GEAR_CHANGE_WAITTIME)
             {
               if(increase_once)
               {
+                #ifndef NO_GEARS
                 if(gear < 10) gear ++;
                 showNewGear();
                 increase_once = 0;
+                #endif
               }
             }
           }
@@ -118,170 +190,7 @@
       }
     }
   }
-#else
-  void checkToggleButton()
-  {
-    if(system_locked)
-    {
-      if(ctminus())
-      {
-        delay(300);
-        if(ctminus())
-        {
-          //To unlock, promt user to touch throttle once
-          CHAR1 = CHAR2 = charset[LET_P];
-          unsigned long timeout = millis();
-          while(thr_scaled < 20 && (millis()-timeout < UNLOCK_TRIGGER_TIMEOUT))
-          {
-            delay(100);
-          }
-          if(millis()-timeout < UNLOCK_TRIGGER_TIMEOUT)
-          {
-            CHAR1 = (1<<5 | 1<<7);
-            CHAR2 = (1<<3 | 1<<7);
-            delay(500);
-            while(thr_scaled > 5)
-            {
-              delay(100);
-            }
-            gear = 1;
-            showNewGear();
-            delay(1000);
-            system_locked = 0;
-          }
-        }
-        last_activity = millis();
-      }
-      else if(ctplus())
-      {
-        //In lock state, holding powers off
-        delay(LOCK_PWR_WAITTIME);
-        if(ctplus())
-        {
-          poweroff = 1;
-        }
-        last_activity = millis();
-      }
-    }
-    //System is NOT locked
-    else
-    {
-      if(remote_error == 0 || remote_error_blocked == 1)
-      {
-        if(!toggle_blocked_by_steer)
-        {
-          if(ctminus())
-          {
-            delay(50);
-            unsigned long pushtime = millis();
-            bool decrease_once = 1;
-            //minus decreases gear, holding locks system
-            while(ctminus())
-            {
-              delay(10);
-              if(millis() - pushtime > LOCK_PWR_WAITTIME)
-              {
-                if(thr_scaled < 10)
-                {
-                  system_locked = 1;
-                  displayLock();
-                }
-                while(ctminus())
-                {
-                  delay(100);
-                }
-                break;
-              }
-              if(millis() - pushtime > GEAR_CHANGE_WAITTIME)
-              {
-                if(decrease_once)
-                {
-                  if(gear > 1) gear --;
-                  showNewGear();
-                  decrease_once = 0;
-                }
-              }
-            }
-            if(!(millis() - pushtime > LOCK_PWR_WAITTIME))
-            {
-              while(ctminus())
-              {
-                delay(10);
-              }
-              delay(50);
-              while(millis() - pushtime < GEAR_DISPLAY_TIME)
-              {
-                checkToggleButton();
-                delay(10);
-              }
-            }
-            last_activity = millis();
-          }
-          else if(ctplus())
-          {
-            delay(50);
-            unsigned long pushtime = millis();
-            bool increase_once = 1;
-            //Plus decreases gear, holding powers off
-            while(ctplus())
-            {
-              delay(10);
-              if(millis() - pushtime > LOCK_PWR_WAITTIME)
-              {
-                if(thr_scaled < 10) poweroff = 1;
-                break;
-              }
-              if(millis() - pushtime > GEAR_CHANGE_WAITTIME)
-              {
-                if(increase_once)
-                {
-                  if(gear < 10) gear ++;
-                  showNewGear();
-                  increase_once = 0;
-                }
-              }
-            }
-            if(!(millis() - pushtime > LOCK_PWR_WAITTIME))
-            {
-              while(ctplus())
-              {
-                delay(10);
-              }
-              delay(50);
-              while(millis() - pushtime < GEAR_DISPLAY_TIME)
-              {
-                checkToggleButton();
-                delay(10);
-              }
-            }
-            last_activity = millis();
-          }
-        }
-      }
-      else
-      {
-        if(ctminus() | ctplus())
-        {
-          delay(500);
-          if(ctminus() | ctplus())
-          {
-            remote_error = 0;
-            displayError(19);
-            while(ctminus() | ctplus());
-            remote_error_blocked = 1;
-            unsigned long pushtime = millis();
-            while(millis() - pushtime < ERR_DELETE_TIME)
-            {
-              checkToggleButton();
-              delay(10);
-            }
-            remote_error_blocked = 0;
-          }
-        }
-      }
-    }
-  }
-#endif
+}
 
 void measureAndBuffer()
 {
@@ -302,43 +211,12 @@ void calcFilter()
   thr_filter = tog_filter = intbat_filter = 0;
   for(int i = 0; i < 10; i++)
   {
-    #ifndef TOTO_MODE
-      thr_filter += thr_raw[i];
-    #endif
+    thr_filter += thr_raw[i];
     tog_filter += tog_raw[i];
     intbat_filter += intbat_raw[i];
   }
-
-  #ifdef TOTO_MODE
-    if(filter_count == 0)
-    {
-      thr_filter += thr_raw[7];
-      thr_filter += thr_raw[8];
-      thr_filter += thr_raw[9];
-    }
-    else if(filter_count == 1)
-    {
-      thr_filter += thr_raw[8];
-      thr_filter += thr_raw[9];
-      thr_filter += thr_raw[0];
-    }
-    else if(filter_count == 2)
-    {
-      thr_filter += thr_raw[9];
-      thr_filter += thr_raw[0];
-      thr_filter += thr_raw[1];
-    }
-    else
-    {
-      thr_filter += thr_raw[filter_count-3];
-      thr_filter += thr_raw[filter_count-2];
-      thr_filter += thr_raw[filter_count-1];
-    }
-     thr_filter /= 3;
-  #else
-    thr_filter /= 10;
-  #endif
   
+  thr_filter /= 10;
   tog_filter /= 10;
   intbat_filter /= 10;
 

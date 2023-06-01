@@ -98,7 +98,7 @@ void sleepUntilMovement()
     poweroff = 0;
 
     //Show internal Bat as long as toggle is held 
-    displayBattery(1);
+    displayIdle(1);
     delay(100);
     while((ctplus()))
     {
@@ -106,8 +106,8 @@ void sleepUntilMovement()
     }
     blinkDot = 0;
 
+    gear = STARTGEAR+1;
     #ifdef NO_LOCK
-      gear = 10;
       //Wait until throttle is free
       while(thr_scaled > 0)
       {
@@ -120,7 +120,6 @@ void sleepUntilMovement()
       delay(500);
       system_locked = 0;
     #else
-      gear = 1;
       powerOnAnimation();
       displayLock();
     #endif

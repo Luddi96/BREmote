@@ -34,8 +34,8 @@
  * Variables
  */
 
-// 0: Check to Remote, 1: Rem.Err Code, 2: Battery VESC, 3: 0xFF
-volatile uint8_t payload_arr[] = {0x0B, 0x00, 101, 0xFF};
+// 0: Check to Remote, 1: Rem.Err Code, 2: Battery VESC, 3: 0xFF, 4: Temp from VESC
+volatile uint8_t payload_arr[] = {0x0B, 0x00, 101, 0xFF, 101};
 // 0: Check from Remote, 1: Trigger value, 2: 0xFF
 volatile uint8_t rx_arr[4];
 volatile uint8_t last_check = payload_arr[0];

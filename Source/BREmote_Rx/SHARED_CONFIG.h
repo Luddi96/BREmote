@@ -27,43 +27,7 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
 //Output Debug Information
   #define DEBUG
   
-  //#define STEERING_ENABLED                    //If steering feature is enable (see also fine tuning at "Tx Specific")
-
-/*
- * Tx Specific
- */
- 
-    // No locking function, as soon as remote is on, throttle is active
-      //#define NO_LOCK       
-    
-    // Hyteresis
-      #define TOG_DIFF 8                          //Hysteresis for Toggle
-      #define TOG_STB_DIFF 8                      //Hysteresis for Standby Toggle
-
-    // Steering Feature (e.g. for tow boogies) - Enable at top of this file
-      #define STEER_TOG_DIFF 15                   //Sensitivity of Steering
-      #define STEER_DEADZONE 3                    //Deadzone for steering
-      #define TOGGLE_BLOCK_TIME 500               //How long toogle button is in steering (*10ms)
-    
-    //Timings
-      #define UNLOCK_TRIGGER_TIMEOUT 5000         //Time after unlock until trigger times out (ms)
-      #define LOCK_PWR_WAITTIME 2000              //Time toggle needs to be pressed to power off or lock system (ms)
-      
-      #define GEAR_CHANGE_WAITTIME 100            //Time toggle needs to be pressed to change gear (ms)
-      #define GEAR_DISPLAY_TIME 1000              //How long the new gear is shown (ms)
-
-      #define ERR_DELETE_TIME 2000                //How long the "E-" is shown after deleting an error. In this time, the user can also change gear, even if the error is still persistent (and therefore will be shown again after this time is over)
-    
-      #define NO_ACTIVITY_TIMEOUT 60000           //Turn off power if no button is pressed and receiver has no connection (ms)
-    
-    //Internal Battery measurement
-      #define INT_VBAT_CALIBRATION 0.004290224    //This converts ADC Bits to Voltage
-      #define INT_VBAT_FULL_AT 410                //Voltage at which 1000% internal Battery is displayed (100*V) DEFAULT 410
-      #define INT_VBAT_EMPTY_AT 340               //Voltage at which 0% internal Battery is displayed (Also the protection limit), MIN: 34V (100*V) DEFAULT 340
-      #define FOIL_VBAT_WARN_AT 10                //Percent at wich VESC Battery triggers a warning (%)
-    
-    //For Debug, Viration Motor can be disabled
-      #define MOTOR_ENABLED
+  //#define STEERING_ENABLED                    //If steering feature is enabled
 
 /*
  * Rx Specific
@@ -73,8 +37,8 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
     #define ANALOG_UBAT_FACTOR 0.853688     //Calibration factor for analog UBAT input, default: 0.025869
     
     //Foil Battery Mapping
-      #define FOIL_BAT_EMPTY_AT 180         //10*V (e.g. 200 = 20V)
-      #define FOIL_BAT_FULL_AT 220          //10*V (e.g. 200 = 20V)
+      #define FOIL_BAT_EMPTY_AT 100         //10*V (e.g. 200 = 20V)
+      #define FOIL_BAT_FULL_AT 600          //10*V (e.g. 200 = 20V)
 
     //Wetness Detection
       #define WETNESS_DET_ACTIVE            //If Wetness Detection should be active or not (generates E7)

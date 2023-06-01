@@ -102,7 +102,14 @@ A: Make sure you selected "Arduino Nano ATmega328P **(Old Bootloader)**"
 
 ---
 # Changelog:
-
+### 2023-06-01: [Release V1.6]
+### 2023-06-01: [Source]
+- Remove Toto Mode
+- Add more options to customize UI:
+	- NO_LOCK
+	- NO_POWERBUTTON
+	- NO_GEARS
+- Add temperature display
 ### 2023-05-05: [Release V1.5.1]
 ### 2023-05-05: [Source - Tx]
 - Added "Toto mode" (less filtering for another throttle sensing concept)

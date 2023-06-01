@@ -93,15 +93,15 @@ void displayUU()
   }
 }
 
-void displayBattery(int selection)
+void displayIdle(int selection)
 {
-  //Internal
+  //Internal Bat
   if(selection == 1)
   {
     CHAR1 = charset[internal_battery/10];
     CHAR2 = charset[internal_battery%10];
   }
-  //VESC
+  //VESC Bat
   if(selection == 2)
   {
     if(vesc_battery != 101)
@@ -114,6 +114,21 @@ void displayBattery(int selection)
     {
       CHAR1 = charset[DASH];
       CHAR2 = charset[DASH];
+    }
+  }
+  //Temp
+  if(selection == 3)
+  {
+    if(vesc_temp != 101)
+    {
+      uint8_t temp = constrain(vesc_temp,0,99);
+      CHAR1 = charset[temp/10];
+      CHAR2 = charset[LOWER_CELSIUS];
+    }
+    else
+    {
+      CHAR1 = charset[DASH];
+      CHAR2 = charset[LOWER_CELSIUS];
     }
   }
 }

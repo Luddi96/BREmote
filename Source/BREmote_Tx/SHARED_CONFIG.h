@@ -32,12 +32,15 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
 /*
  * Tx Specific
  */
- 
-    // No locking function, as soon as remote is on, throttle is active
-      //#define NO_LOCK       
 
-    // Toto mode (Throttle is a different sensor from 0 to 3.3V)
-      //#define TOTO_MODE
+    //Behaviour of the User Interface
+      //#define NO_LOCK             //No locking function, as soon as remote is on, throttle is active
+      //#define NO_POWERBUTTON      //The toggle button cant turn off the remote (the remote will power off automatically if the receiver is off for > NO_ACTIVITY_TIMEOUT (see below))
+      //#define NO_GEARS            //Gears can't be switched (set STARTGEAR to 9)
+      
+      #define STARTGEAR 0         //The gear that is set after poweron or unlock (0 to 9)
+
+      #define SHOW_TEMP           //If display should also show temp (alternate btw. temp and bat) or only show bat
       
     // Hyteresis
       #define TOG_DIFF 8                          //Hysteresis for Toggle
@@ -68,23 +71,7 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
     //For Debug, Viration Motor can be disabled
       #define MOTOR_ENABLED
 
-/*
- * Rx Specific
- */
-    #define USE_VESC_UART                 //If VESC is connected via UART
-    
-    #define ANALOG_UBAT_FACTOR 0.853688     //Calibration factor for analog UBAT input, default: 0.025869
-    
-    //Foil Battery Mapping
-      #define FOIL_BAT_EMPTY_AT 180         //10*V (e.g. 200 = 20V)
-      #define FOIL_BAT_FULL_AT 220          //10*V (e.g. 200 = 20V)
 
-    //Wetness Detection
-      #define WETNESS_DET_ACTIVE            //If Wetness Detection should be active or not (generates E7)
-      #define WETNESS_SENS 500              //Wetness sensitivity. 0: Least sensitive, 1024: Most sensitive, good range: 100 to 500
-      #define WETNESS_HYST 50               //Wetness hysteresis. WETNESS_SENS - WETNESS_HYST must always be greater than 0, WETNESS_SENS + WETNESS_HYST must always be lower than 1024, good value: 50
-
-    //#define BMS_DET_ACTIVE                //If External BMS Input should be read or not (generates E8)
 /*
 * Error Codes (don't change)
 */

@@ -35,7 +35,6 @@ void setup()
   enablePower();
   #ifdef NO_LOCK
     system_locked = 0;
-    gear = 10;
   #endif
   delay(1000);
   enableDisplay();
@@ -69,7 +68,18 @@ void loop()
         else
         {
           blinkDot &= 0xFB;
-          displayBattery(2);
+          #ifdef SHOW_TEMP
+            if((millis() / 2000 ) % 2)
+            {
+              displayIdle(2);
+            }
+            else
+            {
+              displayIdle(3);
+            }
+          #else
+            displayIdle(2);
+          #endif
         }
       }
       else
