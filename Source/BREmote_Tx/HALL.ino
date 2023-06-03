@@ -61,8 +61,8 @@ void checkToggleButton()
       {
         poweroff = 1;
       }
-      #endif
       last_activity = millis();
+      #endif
     }
   }
   //System is NOT locked
@@ -88,6 +88,7 @@ void checkToggleButton()
                 #ifndef NO_LOCK
                 system_locked = 1;
                 displayLock();
+                last_activity = millis();
                 #endif
               }
               while(ctminus())
@@ -104,6 +105,7 @@ void checkToggleButton()
                 if(gear > 1) gear --;
                 showNewGear();
                 decrease_once = 0;
+                last_activity = millis();
                 #endif
               }
             }
@@ -121,7 +123,6 @@ void checkToggleButton()
               delay(10);
             }
           }
-          last_activity = millis();
         }
         else if(ctplus())
         {
@@ -136,6 +137,7 @@ void checkToggleButton()
             {
               #ifndef NO_POWERBUTTON
               if(thr_scaled < 10) poweroff = 1;
+              last_activity = millis();
               #endif
               break;
             }
@@ -147,6 +149,7 @@ void checkToggleButton()
                 if(gear < 10) gear ++;
                 showNewGear();
                 increase_once = 0;
+                last_activity = millis();
                 #endif
               }
             }
@@ -164,7 +167,6 @@ void checkToggleButton()
               delay(10);
             }
           }
-          last_activity = millis();
         }
       }
     }
