@@ -48,6 +48,7 @@ void loop()
   if(poweroff)
   {
     powerOffAnimation();
+    digitalWrite(EN_MOT, LOW);
     sleepUntilMovement();
   }
   else
@@ -101,8 +102,8 @@ ISR(TIMER2_COMPA_vect)
   if(isr_active)
   {
     multidiv++;
-    if(multidiv > 100)
-    { 
+    if(multidiv > 20)
+    {
       if(motordiv >= 10)
       {
         if(blinkDot)
@@ -132,5 +133,18 @@ ISR(TIMER2_COMPA_vect)
     calcFilter();
     //if(comm_errors < 250) sendValues();
     sendValues();
+
+    // adjust softpower counter
+    if (++soft_power_counter > soft_power) {
+      if (soft_power_steps < 0) soft_power_steps++;
+      if (soft_power_steps > 0) soft_power_steps--;
+      soft_power_counter = 0;
+      /*
+      DEBUG_PRINT("softpower check:");
+      DEBUG_PRINT(soft_power_steps);
+      DEBUG_PRINT(" ");
+      DEBUG_PRINTLN(thr_scaled);
+      */
+    }
   }
 }

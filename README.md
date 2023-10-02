@@ -102,6 +102,11 @@ A: Make sure you selected "Arduino Nano ATmega328P **(Old Bootloader)**"
 
 ---
 # Changelog:
+### 2023-06-01: [Release V1.6.2]
+### 2023-10-02: [Source - Tx]
+- Softer Gears: When at full throttle, changing gear is smoothened (Thanks to Dyse)
+### 2023-07-24: [Source - Readme]
+- Added Information how to connnect ISP for LR version
 ### 2023-06-01: [Release V1.6]
 ### 2023-06-01: [Source]
 - Remove Toto Mode
@@ -175,3 +180,4 @@ A: Make sure you selected "Arduino Nano ATmega328P **(Old Bootloader)**"
 Logo uses "watersport" and "Skate" by Adrien Coquet from https://thenounproject.com/. CC BY 3.0.
 
 Thanks to Daniel for implementing and testing the magnetic connector!
+Tanks to Dyse for implementing the soft gears feature!

@@ -56,6 +56,7 @@ void initEEPROM()
   
     thr_min_ee = ((uint16_t)EEPROM.read(EE_THR_MIN) << 8) + (uint16_t)EEPROM.read(EE_THR_MIN+1);
     thr_max_ee = ((uint16_t)EEPROM.read(EE_THR_MAX) << 8) + (uint16_t)EEPROM.read(EE_THR_MAX+1);
+    thr_max = thr_max_ee - thr_min_ee - 10;      // needed for softpower check
     tog_mid_ee = ((uint16_t)EEPROM.read(EE_TOG) << 8) + (uint16_t)EEPROM.read(EE_TOG+1);
     tod_mid_stb_ee = ((uint16_t)EEPROM.read(EE_TOG_STB) << 8) + (uint16_t)EEPROM.read(EE_TOG_STB+1);
 
@@ -130,6 +131,7 @@ void disablePower()
   digitalWrite(EN_PWR, LOW);
   power_enabled = 0;
   
+  digitalWrite(EN_MOT, LOW);
   digitalWrite(0, LOW);
   digitalWrite(1, LOW);
   digitalWrite(SPI_SCK, LOW);

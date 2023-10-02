@@ -140,7 +140,6 @@ void displayError(int err)
   CHAR2 = charset[err];
 }
 
-
 void displayWelcomeMessage()
 {
   CHAR1 = charset[LET_H];

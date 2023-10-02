@@ -80,6 +80,7 @@ volatile unsigned long last_activity = 0;
 
 uint16_t thr_min_ee = 0;
 uint16_t thr_max_ee = 0;
+uint16_t thr_max = 0;
 
 uint16_t tog_mid_ee = 0;
 uint16_t tod_mid_stb_ee = 0;
@@ -91,6 +92,13 @@ bool tog_rev_ee = 0;
 uint8_t pin_hall_thr = 0;
 uint8_t pin_hall_tog = 0;
 uint8_t pin_hall_tog_stb = 0;
+
+// softpower: when changing gear while fullthrottle, this damps the impact on new throttle
+// debug output: BREmote_Tx.ino line 143ff
+
+volatile uint16_t soft_power = 10;         // lower = harder impact, higher value = softer impact, 0 = no softpower, 10 = one step every 100ms
+volatile int16_t soft_power_steps = 0;
+volatile uint16_t soft_power_counter = 0;
 
 /*
  * Includes

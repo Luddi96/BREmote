@@ -3,7 +3,8 @@
 - Only Main_Body needs support.
 - Nozzle Dia 0.4mm
 - Layer Height 0.2mm
-- First Layer 0.3mm)
+- First Layer 0.3mm
+- 3 outer layers
 - PETG recommended.
 
 ## What to do:

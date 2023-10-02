@@ -27,6 +27,10 @@ void initPins()
   pinMode(NRF_IRQ, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(NRF_IRQ), radioInterrupt, FALLING);
 
+  #ifdef WETNESS_DET_ACTIVE
+    digitalWrite(EN_WET_MEAS, HIGH);
+  #endif
+
   #ifdef STEERING_ENABLED
     pinMode(EN_AUX1, OUTPUT);
   #endif

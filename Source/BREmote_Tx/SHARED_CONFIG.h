@@ -43,8 +43,8 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
       #define SHOW_TEMP           //If display should also show temp (alternate btw. temp and bat) or only show bat
       
     // Hyteresis
-      #define TOG_DIFF 8                          //Hysteresis for Toggle
-      #define TOG_STB_DIFF 8                      //Hysteresis for Standby Toggle
+      #define TOG_DIFF 8                          //Hysteresis for Toggle (30 for toto)
+      #define TOG_STB_DIFF 8                      //Hysteresis for Standby Toggle (30 for toto)
 
     // Steering Feature (e.g. for tow boogies) - Enable at top of this file
       #define STEER_TOG_DIFF 15                   //Sensitivity of Steering

@@ -102,7 +102,10 @@ void checkToggleButton()
               if(decrease_once)
               {
                 #ifndef NO_GEARS
-                if(gear > 1) gear --;
+                if(gear > 1) {
+                  gear --;
+                  if (thr_float >= thr_max) soft_power_steps -= 25;       // if throttle is at max, soften gear change
+                }
                 showNewGear();
                 decrease_once = 0;
                 last_activity = millis();
@@ -146,7 +149,10 @@ void checkToggleButton()
               if(increase_once)
               {
                 #ifndef NO_GEARS
-                if(gear < 10) gear ++;
+                if(gear < 10) {
+                  gear ++;
+                  if (thr_float >= thr_max) soft_power_steps += 25;     // if throttle is at max, soften gear change
+                }
                 showNewGear();
                 increase_once = 0;
                 last_activity = millis();
@@ -231,8 +237,14 @@ void calcFilter()
     thr_float = (float)thr_filter - (float)thr_min_ee;
   }
 
+  if (thr_float < thr_max) soft_power_steps = 0;      // if throttle is released from max, cancel softpower
+
+  #ifdef STEERING_ENABLED                             // steering disables softpower
+    soft_power_counter = 0;
+  #endif
+
   uint16_t thr_tomap = (uint16_t)( constrain(thr_float,0.0,(float)thr_max_ee-thr_min_ee) * (float)gear);
-  thr_scaled = (uint8_t)map(thr_tomap, 0, (thr_max_ee-thr_min_ee)*10, 0, 255);
+  thr_scaled = (uint8_t)map(thr_tomap, 0, (thr_max_ee-thr_min_ee)*10, 0, 255) - soft_power_steps;
 
   #ifdef STEERING_ENABLED
     if(tog_rev_ee)

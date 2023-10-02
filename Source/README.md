@@ -6,7 +6,10 @@ Note: You should do this, before soldering the NRF Module in place. Just take 6 
 
 Note: If you have the accelerometer populated, flashing should be done at 3.3V (Arduino has 5V), you should use a level shifter on all SPI pins to avoid damage to the accelerometer IC.
 
+Note: The Pinout is only valid for the "normal" Tx Version. For the Tx_LR (long range), please contact me.
+
 ![ISP](ISPConnection.png)
+![ISP_LR](ISPConnection-LR.png)
 
 ## How to compile / upload
 
