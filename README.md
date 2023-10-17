@@ -102,6 +102,9 @@ A: Make sure you selected "Arduino Nano ATmega328P **(Old Bootloader)**"
 
 ---
 # Changelog:
+### 2023-06-01: [Release V1.6.3]
+### 2023-10-02: [Mechanics - LR]
+- Added Juergens improved version of the long range bodies
 ### 2023-06-01: [Release V1.6.2]
 ### 2023-10-02: [Source - Tx]
 - Softer Gears: When at full throttle, changing gear is smoothened (Thanks to Dyse)
@@ -181,3 +184,4 @@ Logo uses "watersport" and "Skate" by Adrien Coquet from https://thenounproject.
 
 Thanks to Daniel for implementing and testing the magnetic connector!
 Tanks to Dyse for implementing the soft gears feature!
+Thanks to Juergen for the improved long range bodies!
