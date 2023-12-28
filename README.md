@@ -102,6 +102,11 @@ A: Make sure you selected "Arduino Nano ATmega328P **(Old Bootloader)**"
 
 ---
 # Changelog:
+### 2023-12-28: [Release V1.6.4]
+### 2023-12-28: [Mechanics - LR]
+- Minor changes on main body
+	- Longer antenna hole (now 58mm)
+	- Reinforcements
 ### 2023-06-01: [Release V1.6.3]
 ### 2023-10-02: [Mechanics - LR]
 - Added Juergens improved version of the long range bodies
