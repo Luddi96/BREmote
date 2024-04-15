@@ -31,7 +31,11 @@ void initPins()
     digitalWrite(EN_WET_MEAS, HIGH);
   #endif
 
-  #ifdef STEERING_ENABLED
+  #ifdef SERVO_STEERING_ENABLED
+    pinMode(EN_AUX1, OUTPUT);
+  #endif
+
+  #ifdef DIFF_STEERING_ENABLED
     pinMode(EN_AUX1, OUTPUT);
   #endif
   
@@ -106,6 +110,7 @@ void checkWetnessSensor()
 
 void getUbatLoop()
 {
+  #ifdef USE_UBAT_MEAS
   if(millis() - get_vesc_timer > 1000)
   {
     uint16_t ubat_raw = analogRead(UBAT_MEAS);
@@ -120,6 +125,7 @@ void getUbatLoop()
     updatePayload();
     get_vesc_timer = millis();
   }
+  #endif
 }
 
 void setupTimer1()

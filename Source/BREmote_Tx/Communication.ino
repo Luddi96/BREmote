@@ -21,48 +21,71 @@ void sendValues()
   //Write throttle value into array
   if(system_locked)
   {
-    tx_arr[1] = 0;
+    #ifdef REVERSE_ENABLED
+      tx_arr[1] = 127;
+    #else
+      tx_arr[1] = 0;
+    #endif
     tx_arr[3] = 127;
   }
   else
   {
-    tx_arr[1] = thr_scaled;
-    tx_arr[3] = steer_scaled;
-  }
-  //Send
-  if (radio.write(&tx_arr, sizeof(tx_arr))) 
-  {
-    //Is there ACK?
-    if(radio.available())
-    {
-      radio.read(&rx_arr, sizeof(rx_arr));
-      //Check if bit 3 is 0xFF
-      if(rx_arr[3] == 0xFF)
+    #ifdef REVERSE_ENABLED
+      if(gear == 1)
       {
-        //Copy check value to tx array, get data
-        tx_arr[0] = rx_arr[0];
-        if(rx_arr[1] != 0)
-        {
-          remote_error = rx_arr[1];
-        }
-        vesc_battery = rx_arr[2];
-        vesc_temp = rx_arr[4];
-        if(comm_errors >= 250) comm_errors = 249;
-        if(comm_errors > 0) comm_errors--;
-        last_activity = millis();
+        tx_arr[1] = 127-thr_scaled;
       }
       else
       {
-        err_cause = ERR_PACKET_CONTENT;
-        if(comm_errors <= 250) comm_errors++;
+        tx_arr[1] = 127+thr_scaled;
+      }
+    #else
+      tx_arr[1] = thr_scaled;
+    #endif
+    tx_arr[3] = steer_scaled;
+  }
+
+  //Send
+  #ifdef DONT_SEND_IDLE
+  if(toggle_blocked_by_steer)
+  {
+  #endif
+    if (radio.write(&tx_arr, sizeof(tx_arr))) 
+    {
+      //Is there ACK?
+      if(radio.available())
+      {
+        radio.read(&rx_arr, sizeof(rx_arr));
+        //Check if bit 3 is 0xFF
+        if(rx_arr[3] == 0xFF)
+        {
+          //Copy check value to tx array, get data
+          tx_arr[0] = rx_arr[0];
+          if(rx_arr[1] != 0)
+          {
+            remote_error = rx_arr[1];
+          }
+          vesc_battery = rx_arr[2];
+          vesc_temp = rx_arr[4];
+          if(comm_errors >= 250) comm_errors = 249;
+          if(comm_errors > 0) comm_errors--;
+          last_activity = millis();
+        }
+        else
+        {
+          err_cause = ERR_PACKET_CONTENT;
+          if(comm_errors <= 250) comm_errors++;
+        }
       }
     }
+    else
+    {
+      err_cause = ERR_NO_ACK;
+      if(comm_errors <= 250) comm_errors++;
+    }
+  #ifdef DONT_SEND_IDLE
   }
-  else
-  {
-    err_cause = ERR_NO_ACK;
-    if(comm_errors <= 250) comm_errors++;
-  }
+  #endif
 }
 
 /*Init NRF Module */

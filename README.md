@@ -95,6 +95,13 @@
 
 </details>
 
+<details>
+<summary>Steering/Dual Motor</summary>
+
+![Conn3](https://github.com/Luddi96/BREmote/blob/main/img/conn3.png)
+
+</details>
+
 ---
 # FAQ:
 Q: When trying to program the remote with the Arduino IDE, I get an error "avrdude: stk500_getsync()"
@@ -102,6 +109,18 @@ A: Make sure you selected "Arduino Nano ATmega328P **(Old Bootloader)**"
 
 ---
 # Changelog:
+### 2024-04-15: [Release V1.7]
+Note: Changing to this release will require new calibration!
+### 2024-04-15: [Source - all]
+- Tx:
+	- THR_TO_PWRUP: Remote can be set to only turn on when throttle is pressed (more robust to unwanted turn-on)
+	- REVERSE: Instead of 10 forward gears, there is a forward and reverse gear 
+	- DONT_SEND_IDLE: Remote will stop sending packets when trigger is not pressed (multiple remotes can be used with one Rx, e.g. for sharing a tow boogie)
+- Rx:
+	- Diff. Steering
+- Calibration:
+	- Added new paramter for "THR_TO_PWRUP" function
+- Add connection example for Steer/Dual Motor
 ### 2023-12-28: [Release V1.6.4]
 ### 2023-12-28: [Mechanics - LR]
 - Minor changes on main body

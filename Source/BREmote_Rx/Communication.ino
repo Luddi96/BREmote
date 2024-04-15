@@ -43,12 +43,25 @@ void initNRF()
 //approx. 500us
 void radioInterrupt()
 {
-  #ifdef STEERING_ENABLED
+  #ifdef SERVO_STEERING_ENABLED
     digitalWrite(EN_AUX1, LOW);
     delayMicroseconds(STEER_LOWEND + (rx_arr[3]<<STEER_MULTIPLIER));
     digitalWrite(EN_AUX1, HIGH);
   #else
-    delayMicroseconds(500);
+    #ifdef DIFF_STEERING_ENABLED
+      if(!failsafe)
+      {
+        digitalWrite(EN_AUX1, LOW);
+        delayMicroseconds(secondThrottleTime);
+        digitalWrite(EN_AUX1, HIGH);
+      }
+      else
+      {
+        digitalWrite(EN_AUX1, HIGH);
+      }
+    #else
+      delayMicroseconds(500);
+    #endif
   #endif
   bool tx_ds, tx_df, rx_dr;
   radio.whatHappened(tx_ds, tx_df, rx_dr);
@@ -65,8 +78,58 @@ void radioInterrupt()
         last_packet = millis();
         if(!failsafe)
         {
-          uint16_t servoTime = (uint16_t)rx_arr[1];
-          OCR1A = OCR1A_MID + (servoTime<<OCR1A_MULTIPLIER);
+      	  #ifdef REVERSE_ENABLED
+            int16_t ppmTime = (uint16_t)rx_arr[1] - 127;
+            int16_t ppmTimeSecond = (uint16_t)rx_arr[1] - 127;
+      	  #else
+      	    int16_t ppmTime = (uint16_t)rx_arr[1];
+            int16_t ppmTimeSecond = (uint16_t)rx_arr[1];
+      	  #endif
+          
+          #ifdef DIFF_STEERING_ENABLED
+            //Subtract from first motor
+            if(rx_arr[3] > 127)
+            {
+              uint16_t ppmTimeModifier = ((uint16_t)rx_arr[3] - 127) * STEER_AMOUNT;
+              if(ppmTime > ppmTimeModifier)
+              {
+                if(ppmTime >= 0)
+                {
+                  ppmTime -= ppmTimeModifier;
+                }
+                else
+                {
+                  ppmTimeSecond += ppmTimeModifier;
+                }
+              }
+              else
+              {
+                ppmTime = 0;
+              }
+            }
+            //Subtract from 2nd motor
+            if(rx_arr[3] < 127)
+            {
+              uint16_t ppmTimeModifier = (127- (uint16_t)rx_arr[3]) * STEER_AMOUNT;
+              if(ppmTimeSecond > ppmTimeModifier)
+              {
+                if(ppmTimeSecond >= 0)
+                {
+                  ppmTimeSecond -= ppmTimeModifier;
+                }
+                else
+                {
+                  ppmTime += ppmTimeModifier;
+                }
+              }
+              else
+              {
+                ppmTimeSecond = 0;
+              }
+            }
+            secondThrottleTime = (OCR1A_MID + (ppmTimeSecond<<OCR1A_MULTIPLIER))/2;
+          #endif
+          OCR1A = OCR1A_MID + (ppmTime<<OCR1A_MULTIPLIER);
         }
         radio.writeAckPayload(1, &payload_arr, sizeof(payload_arr));
       }      

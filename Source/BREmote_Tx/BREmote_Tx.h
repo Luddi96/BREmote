@@ -80,10 +80,11 @@ volatile unsigned long last_activity = 0;
 
 uint16_t thr_min_ee = 0;
 uint16_t thr_max_ee = 0;
+uint16_t thr_min_stb_ee = 0;
 uint16_t thr_max = 0;
 
 uint16_t tog_mid_ee = 0;
-uint16_t tod_mid_stb_ee = 0;
+uint16_t tog_mid_stb_ee = 0;
 
 bool lefthander_ee = 0;
 bool thr_rev_ee = 0;
@@ -91,6 +92,7 @@ bool tog_rev_ee = 0;
 
 uint8_t pin_hall_thr = 0;
 uint8_t pin_hall_tog = 0;
+uint8_t pin_hall_thr_stb = 0;
 uint8_t pin_hall_tog_stb = 0;
 
 // softpower: when changing gear while fullthrottle, this damps the impact on new throttle
@@ -125,6 +127,7 @@ volatile uint16_t soft_power_counter = 0;
 #define EE_TOG     10
 #define EE_TOG_STB 12
 #define EE_TOG_REV 14
+#define EE_THR_MIN_STB 16
 
 //Display:
 #define SR_DAT A4

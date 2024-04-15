@@ -9,7 +9,7 @@ Note: If you have the accelerometer populated, flashing should be done at 3.3V (
 Note: The Pinout is only valid for the "normal" Tx Version. For the Tx_LR (long range), please contact me.
 
 ![ISP](ISPConnection.png)
-![ISP_LR](ISPConnection-LR.png)
+![ISP_LR](ISPConnection_LR.png)
 
 ## How to compile / upload
 
@@ -33,10 +33,11 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
 ```
 * If "NO_LOCK" is uncommented, the remote will start locked and with Powerlevel 0 as default. "NO_LOCK" will deactivate locking & start at Powerlevel 9.
 ```
-#define VESC_BAT_EMPTY_AT 180 //10*V (e.g. 200 = 20V)
-#define VESC_BAT_FULL_AT 220  //10*V (e.g. 200 = 20V)
+#define FOIL_BAT_EMPTY_AT 180 //10*V (e.g. 200 = 20V)
+#define FOIL_BAT_FULL_AT 220  //10*V (e.g. 200 = 20V)
 ```
-* "VESC_BAT_xx" will define at which voltage the VESC battery is recognized as full or empty.
+* "FOIL_BAT_xx" will define at which voltage the VESC battery is recognized as full or empty.
+This change is made in the config of Rx! DO NOT change the INT_VBAT_xx in Tx!
 This is in 10*Voltage, Example values (2.5V/4.2V):
 
 | Series Pack | EMPTY_AT | FULL_AT |

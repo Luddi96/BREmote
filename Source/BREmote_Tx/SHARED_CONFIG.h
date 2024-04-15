@@ -28,16 +28,20 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
   #define DEBUG
   
   //#define STEERING_ENABLED                    //If steering feature is enable (see also fine tuning at "Tx Specific")
-
+  //#define REVERSE_ENABLED                     //Puts remote into reverse mode: Only two "gears": Forward (F) and Reverse (P)
+                                                //Important: Also update RX! Otherwise in failsafe the VESC will be sent wrong commands!
 /*
  * Tx Specific
  */
 
     //Behaviour of the User Interface
-      //#define NO_LOCK             //No locking function, as soon as remote is on, throttle is active
-      //#define NO_POWERBUTTON      //The toggle button cant turn off the remote (the remote will power off automatically if the receiver is off for > NO_ACTIVITY_TIMEOUT (see below))
-      //#define NO_GEARS            //Gears can't be switched (set STARTGEAR to 9)
-      
+      //#define NO_LOCK            //No locking function, as soon as remote is on, throttle is active
+      //#define NO_POWERBUTTON     //The toggle button cant turn off the remote (the remote will power off automatically if the receiver is off for > NO_ACTIVITY_TIMEOUT (see below))
+      //#define NO_GEARS           //Gears can't be switched (set STARTGEAR to 9)
+      //#define THR_TO_PWRUP       //If throttle also needs to be pushed to power the remote (helps if remote turns powers up on its own)
+      //#define DONT_SEND_IDLE     //If the remote should send packets in idle (no trigger applied), contiues for a short time set by TOGGLE_BLOCK_TIME
+                                  //Useful, if 2 or more people have one remote each and control the same towboogie
+          
       #define STARTGEAR 0         //The gear that is set after poweron or unlock (0 to 9)
 
       #define SHOW_TEMP           //If display should also show temp (alternate btw. temp and bat) or only show bat
@@ -45,7 +49,8 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
     // Hyteresis
       #define TOG_DIFF 8                          //Hysteresis for Toggle (30 for toto)
       #define TOG_STB_DIFF 8                      //Hysteresis for Standby Toggle (30 for toto)
-
+      #define THR_STB_DIFF 10                     //Hysteresis for Standby Throttle
+      
     // Steering Feature (e.g. for tow boogies) - Enable at top of this file
       #define STEER_TOG_DIFF 15                   //Sensitivity of Steering
       #define STEER_DEADZONE 3                    //Deadzone for steering
@@ -72,6 +77,12 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
       #define MOTOR_ENABLED
 
 
+#ifdef REVERSE_ENABLED
+  #define MAX_GEARS 2
+  #define STARTGEAR 1
+#else
+  #define MAX_GEARS 10
+#endif
 /*
 * Error Codes (don't change)
 */

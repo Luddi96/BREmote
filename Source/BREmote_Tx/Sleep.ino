@@ -54,6 +54,19 @@ void sleepUntilMovement()
     //Check if should wake up
     #ifdef NO_TOGGLE
     #else
+      #ifdef THR_TO_PWRUP
+      if(checkToggle(0) && checkThrottle())
+      {
+        if(checkToggle(1) && checkThrottle())
+        {
+          delay(200);
+          if(checkToggle(1) && checkThrottle())
+          {
+            movementDetected = 1;
+          }
+        }
+      }
+      #else
       if(checkToggle(0))
       {
         if(checkToggle(1))
@@ -65,6 +78,7 @@ void sleepUntilMovement()
           }
         }
       }
+      #endif
     #endif
   }
 

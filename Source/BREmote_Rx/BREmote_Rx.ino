@@ -36,7 +36,7 @@ void setup()
 uint8_t dummy = 0;
 
 void loop() 
-{
+{  
   //If a VESC is connected via UART read from there
   #ifdef USE_VESC_UART
   getVescLoop();
@@ -66,6 +66,14 @@ void loop()
   {
     failsafe = 1;
     OCR1A = OCR1A_FAILSAFE;
+    #ifdef DIFF_STEERING_ENABLED
+      digitalWrite(EN_AUX1, HIGH);
+      #ifdef REVERSE_ENABLED
+        secondThrottleTime = 1500;
+      #else
+        secondThrottleTime = 500;
+      #endif
+    #endif
   }
   else
   {

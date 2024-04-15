@@ -49,6 +49,7 @@ int16_t meas_A7 = 0;
 #define EE_TOG     10
 #define EE_TOG_STB 12
 #define EE_TOG_REV 14
+#define EE_THR_MIN_STB 16
 
 //Display:
 #define SR_DAT A4

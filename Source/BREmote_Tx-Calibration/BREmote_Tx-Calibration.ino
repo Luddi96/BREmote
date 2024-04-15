@@ -34,12 +34,13 @@ void setup()
 void loop() 
 {
 
-  if(EEPROM.read(EE_VAL_FLAG) == 0xBE)
+  if(EEPROM.read(EE_VAL_FLAG) == 0xCE)
   {
     uint16_t thr_min_read = 0;
     uint16_t thr_max_read = 0;
     uint16_t tog_read = 0;
     uint16_t tog_stb_read = 0;
+    uint16_t thr_min_stb_read = 0;
     
     Serial.println("");
     Serial.println("Data in EEPROM:");
@@ -48,6 +49,8 @@ void loop()
     thr_max_read = ((uint16_t)EEPROM.read(EE_THR_MAX) << 8) + (uint16_t)EEPROM.read(EE_THR_MAX+1);
     tog_read = ((uint16_t)EEPROM.read(EE_TOG) << 8) + (uint16_t)EEPROM.read(EE_TOG+1);
     tog_stb_read = ((uint16_t)EEPROM.read(EE_TOG_STB) << 8) + (uint16_t)EEPROM.read(EE_TOG_STB+1);
+    thr_min_stb_read = ((uint16_t)EEPROM.read(EE_THR_MIN_STB) << 8) + (uint16_t)EEPROM.read(EE_THR_MIN_STB+1);
+
 
     Serial.println("\n");
     if(EEPROM.read(EE_LEFTHANDER)) Serial.println("Lefthander, Trigger right");
@@ -56,6 +59,8 @@ void loop()
     Serial.println(thr_min_read);
     Serial.print("Max Throttle: ");
     Serial.println(thr_max_read);
+    Serial.print("Stb Throttle: ");
+    Serial.println(thr_min_stb_read);
     Serial.print("Throttle Reversed: ");
     Serial.println(EEPROM.read(EE_THR_REV));
     Serial.print("Idle Toggle: ");
@@ -68,7 +73,7 @@ void loop()
   else
   {
     Serial.println("");
-    Serial.println("EEPROM empty!");
+    Serial.println("EEPROM empty or old version!");
   }
   
   Serial.println("");
@@ -100,6 +105,7 @@ void loop()
 
   int16_t thr_min = 0;
   int16_t thr_max = 0;
+  int16_t thr_min_stb = 0;
 
   int16_t toggle_idle = 0;
   int16_t toggle_idle_stb = 0;
@@ -122,6 +128,7 @@ void loop()
       thr_max = meas_A0;
       thr_min = meas_A0_before;
     }
+    thr_min_stb = meas_A2_before;
     toggle_idle = meas_A1_before;
     toggle_idle_stb = meas_A7_before;
   }
@@ -138,6 +145,7 @@ void loop()
       thr_max = meas_A1;
       thr_min = meas_A1_before;
     }
+    thr_min_stb = meas_A7_before;
     toggle_idle = meas_A0_before;
     toggle_idle_stb = meas_A2_before;
   }
@@ -179,6 +187,8 @@ void loop()
   Serial.println(thr_min);
   Serial.print("Max Throttle: ");
   Serial.println(thr_max);
+  Serial.print("Stb Throttle: ");
+  Serial.println(thr_min_stb);
   Serial.print("Throttle Reversed: ");
   Serial.println(thr_rev);
   Serial.print("Idle Toggle: ");
@@ -197,13 +207,15 @@ void loop()
   EEPROM.write(EE_THR_MIN+1, thr_min & 0xFF);
   EEPROM.write(EE_THR_MAX, thr_max >> 8);
   EEPROM.write(EE_THR_MAX+1, thr_max & 0xFF);
+  EEPROM.write(EE_THR_MIN_STB, thr_min_stb >> 8);
+  EEPROM.write(EE_THR_MIN_STB+1, thr_min_stb & 0xFF);
   EEPROM.write(EE_THR_REV, thr_rev);
   EEPROM.write(EE_TOG, toggle_idle >> 8);
   EEPROM.write(EE_TOG+1, toggle_idle & 0xFF);
   EEPROM.write(EE_TOG_STB, toggle_idle_stb >> 8);
   EEPROM.write(EE_TOG_STB+1, toggle_idle_stb & 0xFF);
   EEPROM.write(EE_TOG_REV, tog_rev);
-  EEPROM.write(EE_VAL_FLAG, 0xBE);
+  EEPROM.write(EE_VAL_FLAG, 0xCE);
 
   while(1);
 }

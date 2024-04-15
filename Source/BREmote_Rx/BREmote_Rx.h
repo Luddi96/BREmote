@@ -70,7 +70,9 @@ volatile bool failsafe = 1;
   uint8_t relayAddr[6] = {"BREAR"};
 #endif
 
-
+#ifdef DIFF_STEERING_ENABLED
+volatile uint16_t secondThrottleTime = 0;
+#endif
 
 
 /*
@@ -80,17 +82,34 @@ volatile bool failsafe = 1;
 //PWM-Related:
 #define PWM_INVERTED
 //PWM-Timing-Related:
-#define OCR1A_FAILSAFE 2000
 #define OCR1A_MID 3000
-#define OCR1A_MULTIPLIER 2
+
+#ifdef REVERSE_ENABLED
+  #define OCR1A_FAILSAFE 3000
+  #define OCR1A_MULTIPLIER 3
+#else
+  #define OCR1A_FAILSAFE 2000
+  #define OCR1A_MULTIPLIER 2
+#endif
 
 #define STEER_LOWEND 950
 #define STEER_MULTIPLIER 2
 
+//Diff steering
+#define STEER_AMOUNT 1
+
 //Analog
+
+#ifdef SERVO_STEERING_ENABLED
+  #define EN_AUX1 A1
+  #define EN_AUX2 A2
+#endif
+#ifdef DIFF_STEERING_ENABLED
+  #define EN_AUX1 A2
+  #define EN_AUX2 A1
+#endif
+
 #define BMS_MEAS A0
-#define EN_AUX1 A1
-#define EN_AUX2 A2
 #define EN_WET_MEAS A3
 #define SDA A4
 #define SCL A5

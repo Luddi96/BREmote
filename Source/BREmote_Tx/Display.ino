@@ -47,7 +47,18 @@ void updateDisplay()
 void showNewGear()
 {
   CHAR1 = charset[LET_L];
-  CHAR2 = charset[gear-1];
+  #ifdef REVERSE_ENABLED
+    if(gear == 1)
+    {
+      CHAR2 = charset[LET_P];
+    }
+    else
+    {
+      CHAR2 = charset[LET_F];
+    }
+  #else
+    CHAR2 = charset[gear-1];
+  #endif
 }
 
 void displayLock()

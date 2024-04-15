@@ -70,7 +70,11 @@ void checkToggleButton()
   {
     if(remote_error == 0 || remote_error_blocked == 1)
     {
+      #ifdef STEERING_ENABLED
       if(!toggle_blocked_by_steer)
+      #else
+      if(1)
+      #endif
       {
         if(ctminus())
         {
@@ -149,7 +153,7 @@ void checkToggleButton()
               if(increase_once)
               {
                 #ifndef NO_GEARS
-                if(gear < 10) {
+                if(gear < MAX_GEARS) {
                   gear ++;
                   if (thr_float >= thr_max) soft_power_steps += 25;     // if throttle is at max, soften gear change
                 }
@@ -243,8 +247,33 @@ void calcFilter()
     soft_power_counter = 0;
   #endif
 
-  uint16_t thr_tomap = (uint16_t)( constrain(thr_float,0.0,(float)thr_max_ee-thr_min_ee) * (float)gear);
+  #ifdef REVERSE_ENABLED
+    uint16_t thr_tomap = (uint16_t)( constrain(thr_float,0.0,(float)thr_max_ee-thr_min_ee) * 5);
+  #else
+    uint16_t thr_tomap = (uint16_t)( constrain(thr_float,0.0,(float)thr_max_ee-thr_min_ee) * (float)gear);
+  #endif
   thr_scaled = (uint8_t)map(thr_tomap, 0, (thr_max_ee-thr_min_ee)*10, 0, 255) - soft_power_steps;
+
+  //Check if thr is touched
+  if(thr_scaled > 10 && system_locked == 0)
+  {
+    //If so, block steer and reset counter
+    toggle_blocked_by_steer = 1;
+    toggle_blocked_counter = 0;
+  }
+  else
+  {
+    //If trigger was released, increment
+    if(toggle_blocked_counter < TOGGLE_BLOCK_TIME)
+    {
+      toggle_blocked_counter ++;
+    }
+    //Until TOGGLE_BLOCK_TIME reached, then unlock toggle
+    else
+    {
+      toggle_blocked_by_steer = 0;
+    }
+  }
 
   #ifdef STEERING_ENABLED
     if(tog_rev_ee)
@@ -255,27 +284,7 @@ void calcFilter()
     {
       steer_float = (float)tog_filter - (float)tog_mid_ee;
     }
-  
-    //Check if thr is touched
-    if(thr_scaled > 10 && system_locked == 0)
-    {
-      //If so, block steer and reset counter
-      toggle_blocked_by_steer = 1;
-      toggle_blocked_counter = 0;
-    }
-    else
-    {
-      //If trigger was released, increment
-      if(toggle_blocked_counter < TOGGLE_BLOCK_TIME)
-      {
-        toggle_blocked_counter ++;
-      }
-      //Until TOGGLE_BLOCK_TIME reached, then unlock toggle
-      else
-      {
-        toggle_blocked_by_steer = 0;
-      }
-    }
+    
     if(toggle_blocked_by_steer)
     {
       if(steer_float > STEER_DEADZONE)
@@ -322,6 +331,18 @@ bool checkToggle(bool precise)
   }
 }
 
+bool checkThrottle()
+{
+  if(thr_rev_ee)
+  {
+    return(analogRead(pin_hall_thr_stb) < (thr_min_stb_ee - THR_STB_DIFF));
+  }
+  else
+  {
+    return(analogRead(pin_hall_thr_stb) > (thr_min_stb_ee + THR_STB_DIFF));
+  }
+}
+
 bool ctplus()
 {
   if(tog_rev_ee)
@@ -350,11 +371,11 @@ bool ctstbplus(uint16_t tog)
 {
   if(tog_rev_ee)
   {
-    return((tog < tod_mid_stb_ee - TOG_STB_DIFF));
+    return((tog < tog_mid_stb_ee - TOG_STB_DIFF));
   }
   else
   {
-    return((tog > tod_mid_stb_ee + TOG_STB_DIFF));
+    return((tog > tog_mid_stb_ee + TOG_STB_DIFF));
   }
 }
 
@@ -362,10 +383,10 @@ bool ctstbminus(uint16_t tog)
 {
   if(tog_rev_ee)
   {
-    return((tog > tod_mid_stb_ee + TOG_STB_DIFF));
+    return((tog > tog_mid_stb_ee + TOG_STB_DIFF));
   }
   else
   {
-    return((tog < tod_mid_stb_ee - TOG_STB_DIFF));
+    return((tog < tog_mid_stb_ee - TOG_STB_DIFF));
   }
 }

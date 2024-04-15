@@ -27,12 +27,14 @@ uint8_t txAddr[6] = {"BREAO"}; //From Tx To Rx (BRemote to Board)
 //Output Debug Information
   #define DEBUG
   
-  //#define STEERING_ENABLED                    //If steering feature is enabled
-
+  //#define SERVO_STEERING_ENABLED                    //Servo Output on Aux1 (Modification needed, email me)
+  //#define DIFF_STEERING_ENABLED                     //2nd Motor Output on Aux1  (Modification needed, email me)
+  //#define REVERSE_ENABLED                     //Puts remote into reverse mode: Only two "gears": Forward (F) and Reverse (P)
 /*
  * Rx Specific
  */
-    #define USE_VESC_UART                 //If VESC is connected via UART
+    //#define USE_VESC_UART                 //If VESC is connected via UART
+    //#define USE_UBAT_MEAS                 //If UBAT should be measured via Analog Input (will be overwritten by VESC)
     
     #define ANALOG_UBAT_FACTOR 0.853688     //Calibration factor for analog UBAT input, default: 0.025869
     

@@ -39,7 +39,7 @@ void initReg()
 void initEEPROM()
 {
   DEBUG_PRINT("Reading calib. from EEPROM...");
-  if(EEPROM.read(EE_VAL_FLAG) == 0xBE)
+  if(EEPROM.read(EE_VAL_FLAG) == 0xCE)
   {
     if(EEPROM.read(EE_LEFTHANDER))
     {
@@ -56,9 +56,10 @@ void initEEPROM()
   
     thr_min_ee = ((uint16_t)EEPROM.read(EE_THR_MIN) << 8) + (uint16_t)EEPROM.read(EE_THR_MIN+1);
     thr_max_ee = ((uint16_t)EEPROM.read(EE_THR_MAX) << 8) + (uint16_t)EEPROM.read(EE_THR_MAX+1);
+    thr_min_stb_ee = ((uint16_t)EEPROM.read(EE_THR_MIN_STB) << 8) + (uint16_t)EEPROM.read(EE_THR_MIN_STB+1);
     thr_max = thr_max_ee - thr_min_ee - 10;      // needed for softpower check
     tog_mid_ee = ((uint16_t)EEPROM.read(EE_TOG) << 8) + (uint16_t)EEPROM.read(EE_TOG+1);
-    tod_mid_stb_ee = ((uint16_t)EEPROM.read(EE_TOG_STB) << 8) + (uint16_t)EEPROM.read(EE_TOG_STB+1);
+    tog_mid_stb_ee = ((uint16_t)EEPROM.read(EE_TOG_STB) << 8) + (uint16_t)EEPROM.read(EE_TOG_STB+1);
 
     //Right Sensors: A0 and A2
     //Left Sensors: A1 and A7
@@ -66,12 +67,14 @@ void initEEPROM()
     {
       pin_hall_thr = A0;
       pin_hall_tog = A1;
+      pin_hall_thr_stb = A2;
       pin_hall_tog_stb = A7;
     }
     else
     {
       pin_hall_thr = A1;
       pin_hall_tog = A0;
+      pin_hall_thr_stb = A7;
       pin_hall_tog_stb = A2;
     }
   }

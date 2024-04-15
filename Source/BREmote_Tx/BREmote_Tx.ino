@@ -41,7 +41,7 @@ void setup()
 }
 
 void loop() 
-{  
+{
   checkLastActivity();
   checkBattery();
 
@@ -139,12 +139,6 @@ ISR(TIMER2_COMPA_vect)
       if (soft_power_steps < 0) soft_power_steps++;
       if (soft_power_steps > 0) soft_power_steps--;
       soft_power_counter = 0;
-      /*
-      DEBUG_PRINT("softpower check:");
-      DEBUG_PRINT(soft_power_steps);
-      DEBUG_PRINT(" ");
-      DEBUG_PRINTLN(thr_scaled);
-      */
     }
   }
 }
